@@ -82,11 +82,11 @@ namespace WhereAmI
 
             places.Add(p1);
             places.Add(p2);
-            places.Add(p3);  
+            places.Add(p3);
         }
 
         private void bindData()
-        {   
+        {
             //Bind the source data for the template View
             wifiData.ItemsSource = wifis;
             placesViewData.ItemsSource = places;
@@ -102,9 +102,8 @@ namespace WhereAmI
 
         private void btnChangePlace_Click(object sender, RoutedEventArgs e)
         {
-            //cast of object to a type with as
-            if (placesViewData.SelectedItem != null)
-                (placesViewData.SelectedItem as Place).Name = "Random Name";
+            //TODO register place with new wifis ?
+            PlaceName.IsReadOnly = !PlaceName.IsReadOnly;
         }
 
         private void btnDeletePlace_Click(object sender, RoutedEventArgs e)
@@ -112,6 +111,7 @@ namespace WhereAmI
             if (placesViewData.SelectedItem != null)
             {
                 places.Remove(placesViewData.SelectedItem as Place);
+                placeViewDetail.Visibility = System.Windows.Visibility.Hidden;
             }
         }
 
@@ -119,12 +119,14 @@ namespace WhereAmI
         {
             Random random = new Random();
             int randomNumber = random.Next(0, 30);
-            places.Add(new Place(randomNumber+"FFF" , wifis.ToList<Wifi>()));
+            places.Add(new Place(randomNumber + "FFF", wifis.ToList<Wifi>()));
         }
 
         private void btnResetStatPlace_Click(object sender, RoutedEventArgs e)
         {
             Place p = placesViewData.SelectedItem as Place;
+            //p.Cnt = 0;
+            //Only to test
             p.Cnt += 10;
         }
 
@@ -166,5 +168,9 @@ namespace WhereAmI
             //create wifi models for wifis list using WLAN API
         }
 
+        private void placesViewData_Selected(object sender, RoutedEventArgs e)
+        {
+            placeViewDetail.Visibility = System.Windows.Visibility.Visible;
+        }
     }
 }

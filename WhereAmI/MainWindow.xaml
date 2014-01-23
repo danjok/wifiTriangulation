@@ -64,7 +64,7 @@
                     <!-- TODO Binding-->
                     <TextBlock Grid.Row="0" x:Name="vState" Text="{Binding Place}"  HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="50"></TextBlock>
                     <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,3,0,3">
-                    <Button Name="btnAddPlace" Click="btnAddPlace_Click"  Width="103" FontSize="15" Margin="10,0,0,0" HorizontalAlignment="Left">Add place</Button>
+                        <Button Name="btnAddPlace" Click="btnAddPlace_Click"  Width="103" FontSize="15" Margin="10,0,0,0" HorizontalAlignment="Left">Add place</Button>
                         <Button Name="btnRefres" Click="btnRefresh_Click"  Width="103" FontSize="15" Margin="10,0,0,0" HorizontalAlignment="Left">Refresh</Button>
                     </StackPanel>
                     <Label Grid.Row="2" FontSize="15" Content="Current Wireless Network Connections" HorizontalAlignment="Center"></Label>
@@ -76,7 +76,7 @@
                         </Grid.ColumnDefinitions>
                         <!-- ScrollViewer doesn't work if it is encapsulated in a StackPanel-->
                         <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
-                            <!-- ItemsControl: to have a list of element not selectable -->               
+                            <!-- ItemsControl: to have a list of element not selectable -->
                             <ItemsControl  Name="wifiData" Margin="10">
                                 <ItemsControl.ItemTemplate>
                                     <!-- Description of presentation template for data-->
@@ -108,16 +108,16 @@
                         ListView: ItemsSource is assigned in the .cs file
                         It is possible to describe a presentation template
                     -->
-                    <ListView Grid.Column="0" Margin="10" Name="placesViewData" DisplayMemberPath="Name"></ListView>
+                    <ListView Grid.Column="0" Margin="10" Name="placesViewData" DisplayMemberPath="Name" SelectionMode="Single" SelectionChanged="placesViewData_Selected"></ListView>
                     <!-- GridSplitter to resize column -->
                     <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-                    <StackPanel Grid.Column="2" Margin="10,0,0,0">
+                    <StackPanel Name="placeViewDetail" Grid.Column="2" Margin="10,0,0,0" Visibility="Hidden">
                         <!-- 
                             Note: this is the detail element 
                             The binding is from data of another viewer element (ElementName) and precisely
                             the element bound is given by the property SelectedItem
                         -->
-                        <TextBlock Text="{Binding ElementName=placesViewData, Path=SelectedItem.Name}" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap"></TextBlock>
+                        <TextBox Name="PlaceName" Text="{Binding ElementName=placesViewData, Path=SelectedItem.Name}" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" IsReadOnly="True"></TextBox>
                         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" >
                             <Label Content="Time" FontSize="15"></Label>
                             <TextBlock Text="{Binding ElementName=placesViewData, Path=SelectedItem.Cnt}" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap"></TextBlock>
