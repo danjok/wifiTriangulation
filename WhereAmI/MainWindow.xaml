@@ -126,7 +126,7 @@
                             <!-- binding of eventhandlers to controls-->
                             <Button Name="btnChangePlace" Click="btnChangePlace_Click" Width="103" FontSize="15" Content="Edit"  HorizontalAlignment="Left"/>
                             <Button Name="btnDeletePlace" Click="btnDeletePlace_Click"  Width="103" FontSize="15" Margin="10,0,0,0" HorizontalAlignment="Left">Delete</Button>
-                            <Button Name="btnAddPlace2" Click="btnAddPlace_Click"  Width="103" FontSize="15" Margin="10,0,0,0" HorizontalAlignment="Left">Add</Button>
+                            <Button Name="btnResetStatPlace" Click="btnResetStatPlace_Click"  Width="103" FontSize="15" Margin="10,0,0,0" HorizontalAlignment="Left">Reset</Button>
                         </StackPanel>
                         <!--Items list as in the first tab-->
                         <ItemsControl ItemsSource="{Binding ElementName=placesViewData, Path=SelectedItem.Wifis}" Name="snapshot" HorizontalAlignment="Left">
