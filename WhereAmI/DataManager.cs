@@ -99,7 +99,8 @@ namespace WhereAmI
         //update the wifis list
         public void loadWifis()
         {
-            loadWifisMockVersion();
+            //loadWifisMockVersion();
+            wlan.WlanDataManager.loadWifis();
         }
 
         private void loadWifisMockVersion(){
