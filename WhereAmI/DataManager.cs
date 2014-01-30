@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WhereAmI.models;
+using System.Data;
+using System.Data.Common;
+using System.Data.Entity;
 
 namespace WhereAmI
 {
@@ -39,21 +42,27 @@ namespace WhereAmI
     public class DataManager
     {
         private static DataManager dmInstance;
-
+        
         //A list that notifies any destinations of changes to its content
         //It works only when an item is added or deleted
         //It reflects changes in the list data source
-        public ObservableCollection<Place> places;
+        
+        //public ObservableCollection<Place> places;
         public ObservableCollection<Wifi> wifis;
         public CurrentState currentState;
+        
+        public AppContext context; 
 
         private DataManager()
         {
             //TODO Connection to DB
-            places = new ObservableCollection<Place>();
+            //places = new ObservableCollection<Place>();
+
             wifis = new ObservableCollection<Wifi>();
             currentState = new CurrentState();
-            loadData();
+            //loadData();
+            //loadDataDB();
+            context = new AppContext();
         }
 
         public static DataManager Instance
@@ -66,6 +75,35 @@ namespace WhereAmI
             }
         }
 
+        private void loadDataDB()
+        {
+
+            using (var ctx = new AppContext())
+            {
+
+                var action = new WhereAmI.models.Action { Name = "prova", Command = "run prova" };
+                ctx.Actions.Add(action);
+                ctx.SaveChanges();
+
+                var actions = ctx.Actions;
+                foreach (var a in actions)
+                {
+                    Console.WriteLine("Action: "+a.ToString());
+                }
+
+                //var place = new Place { Name = "home", Cnt = 0, Snapshot = "dlink:10, home:30" };
+                //ctx.Places.Add(place);
+                //ctx.SaveChanges();
+
+                var places = ctx.Places;
+                foreach (var p in places)
+                {
+                    Console.WriteLine("Place:" + p.ToString());
+                }
+            }
+                 
+            }
+       
         private void loadData()
         {
             //Mock for snapshot 
@@ -89,9 +127,9 @@ namespace WhereAmI
             Place p2 = new Place("Polito", snapshot2);
             Place p3 = new Place("Work", snapshot3);
 
-            places.Add(p1);
-            places.Add(p2);
-            places.Add(p3);
+            //places.Add(p1);
+            //places.Add(p2);
+            //places.Add(p3);
 
         }
 
@@ -122,7 +160,8 @@ namespace WhereAmI
         {
             Random random = new Random();
             int randomNumber = random.Next(0, 3);
-            currentState.Place = places.ElementAt(random.Next(0, places.Count));
+            currentState.Place = context.Places.AsEnumerable<Place>().ElementAt<Place>(0);
+            //currentState.Place = places.ElementAt(random.Next(0, places.Count));
             //TODO
             //currentState.Place = triangAlgo(places, wifis);
         }

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WhereAmI.models;
+using System.Data.Entity;
 
 namespace WhereAmI.views
 {
@@ -21,7 +22,6 @@ namespace WhereAmI.views
     /// </summary>
     public partial class PlacesView : UserControl
     {
-       
         public PlacesView()
         {
             InitializeComponent();
@@ -29,9 +29,20 @@ namespace WhereAmI.views
 
         private void OnControlLoaded(object sender, RoutedEventArgs e)
         {
-            //MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
-            //dm = mainWindow.dm;
-            placesViewData.ItemsSource = DataManager.Instance.places;
+            //placesViewData.ItemsSource = DataManager.Instance.places;
+            
+            // Load is an extension method on IQueryable,  
+            // defined in the System.Data.Entity namespace. 
+            // This method enumerates the results of the query,  
+            // similar to ToList but without creating a list. 
+            // When used with Linq to Entities this method  
+            // creates entity objects and adds them to the context.
+            var ctx = DataManager.Instance.context;
+            ctx.Places.Load();
+            
+            // After the data is loaded call the DbSet<T>.Local property  
+            // to use the DbSet<T> as a binding source. 
+            placesViewData.ItemsSource = ctx.Places.Local;
         }
 
         private void btnChangePlace_Click(object sender, RoutedEventArgs e)
@@ -45,17 +56,28 @@ namespace WhereAmI.views
             if (placesViewData.SelectedItem != null)
             {
                 //places.Remove(placesViewData.SelectedItem as Place);
+                var ctx = DataManager.Instance.context;
+                ctx.Places.Remove(placesViewData.SelectedItem as Place);
+                ctx.SaveChangesAsync(); 
+
+                //To hide UI buttons
                 placeViewDetail.Visibility = System.Windows.Visibility.Hidden;
+                //this.placesViewData.Items.Refresh();
             }
         }
 
         private void btnResetStatPlace_Click(object sender, RoutedEventArgs e)
         {
             Place p = placesViewData.SelectedItem as Place;
-            //p.Cnt = 0;
             //Only to test
             p.Cnt += 10;
-        }
+            //p.Cnt = 0;
+           
+            var ctx = DataManager.Instance.context;  
+            var pEntity = ctx.Places.Find(p.PlaceId);
+            ctx.Entry(pEntity).Property(v => v.Cnt).CurrentValue = p.Cnt;
+            ctx.SaveChangesAsync();          
+           }
 
         private void placesViewData_Selected(object sender, RoutedEventArgs e)
         {

@@ -29,9 +29,6 @@ namespace WhereAmI.views
 
         private void OnControlLoaded(object sender, RoutedEventArgs e)
         {
-            //MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
-            //dm = mainWindow.dm;
-
             wifiData.ItemsSource = DataManager.Instance.wifis;
             vState.DataContext = DataManager.Instance.currentState;
         }
@@ -40,7 +37,11 @@ namespace WhereAmI.views
         {
             Random random = new Random();
             int randomNumber = random.Next(0, 30);
-            DataManager.Instance.places.Add(new Place(randomNumber + "FFF", DataManager.Instance.wifis.ToList<Wifi>()));
+            
+            //DataManager.Instance.places.Add(new Place(randomNumber + "FFF", DataManager.Instance.wifis.ToList<Wifi>()));
+            var ctx = DataManager.Instance.context;
+            ctx.Places.Add(new Place() { Name = "Prova", Cnt = 0, Snapshot = Place.serializationSnapshot(DataManager.Instance.wifis.ToList<Wifi>())});
+            ctx.SaveChangesAsync();
         }
 
         //Refresh the system from UI manually

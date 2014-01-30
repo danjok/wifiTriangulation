@@ -15,7 +15,7 @@ namespace WhereAmI.models
 
         public override string ToString()
         {
-            return this.SSID + ": " + this.PowerPerc;
+            return this.SSID + ": " + this.PowerPerc+";";
         }
     }
 }
