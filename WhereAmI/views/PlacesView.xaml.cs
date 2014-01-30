@@ -30,7 +30,7 @@ namespace WhereAmI.views
         private void OnControlLoaded(object sender, RoutedEventArgs e)
         {
             //placesViewData.ItemsSource = DataManager.Instance.places;
-            
+
             // Load is an extension method on IQueryable,  
             // defined in the System.Data.Entity namespace. 
             // This method enumerates the results of the query,  
@@ -39,7 +39,7 @@ namespace WhereAmI.views
             // creates entity objects and adds them to the context.
             var ctx = DataManager.Instance.context;
             ctx.Places.Load();
-            
+
             // After the data is loaded call the DbSet<T>.Local property  
             // to use the DbSet<T> as a binding source. 
             placesViewData.ItemsSource = ctx.Places.Local;
@@ -53,12 +53,19 @@ namespace WhereAmI.views
 
         private void btnDeletePlace_Click(object sender, RoutedEventArgs e)
         {
-            if (placesViewData.SelectedItem != null)
+            // Display message box
+            MessageBoxResult result = MessageBox.Show(
+                Properties.Resources.DeletePlace,
+                Properties.Resources.DeletePlaceTitle,
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (result == MessageBoxResult.Yes)
             {
                 //places.Remove(placesViewData.SelectedItem as Place);
                 var ctx = DataManager.Instance.context;
                 ctx.Places.Remove(placesViewData.SelectedItem as Place);
-                ctx.SaveChangesAsync(); 
+                ctx.SaveChangesAsync();
 
                 //To hide UI buttons
                 placeViewDetail.Visibility = System.Windows.Visibility.Hidden;
@@ -68,16 +75,26 @@ namespace WhereAmI.views
 
         private void btnResetStatPlace_Click(object sender, RoutedEventArgs e)
         {
-            Place p = placesViewData.SelectedItem as Place;
-            //Only to test
-            p.Cnt += 10;
-            //p.Cnt = 0;
-           
-            var ctx = DataManager.Instance.context;  
-            var pEntity = ctx.Places.Find(p.PlaceId);
-            ctx.Entry(pEntity).Property(v => v.Cnt).CurrentValue = p.Cnt;
-            ctx.SaveChangesAsync();          
-           }
+            // Display message box
+            MessageBoxResult result = MessageBox.Show(
+                Properties.Resources.ResetCntPlace,
+                Properties.Resources.ResetCntPlaceTitle,
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                Place p = placesViewData.SelectedItem as Place;
+                //Only to test
+                p.Cnt += 10;
+                //p.Cnt = 0;
+
+                var ctx = DataManager.Instance.context;
+                var pEntity = ctx.Places.Find(p.PlaceId);
+                ctx.Entry(pEntity).Property(v => v.Cnt).CurrentValue = p.Cnt;
+                ctx.SaveChangesAsync();
+            }
+        }
 
         private void placesViewData_Selected(object sender, RoutedEventArgs e)
         {

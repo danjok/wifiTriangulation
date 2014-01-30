@@ -21,7 +21,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <!-- TODO Binding-->
-        <TextBlock Grid.Row="0" x:Name="vState" Text="{Binding Place}"  HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="50"></TextBlock>
+        <TextBlock Grid.Row="0" x:Name="vState" Text="{Binding Place.Name}"  HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="50"></TextBlock>
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,3,0,3">
             <Button Name="btnAddPlace" Click="btnAddPlace_Click"  Width="103" FontSize="15" Margin="10,0,0,0" HorizontalAlignment="Left">Add place</Button>
             <Button Name="btnRefres" Click="btnRefresh_Click"  Width="103" FontSize="15" Margin="10,0,0,0" HorizontalAlignment="Left">Refresh</Button>
