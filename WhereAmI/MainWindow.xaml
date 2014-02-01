@@ -53,6 +53,9 @@
             <TabItem Header="Places">
                 <tabData:PlacesView />
             </TabItem>
+            <TabItem Header="Actions">
+                <tabData:ActionsView />
+            </TabItem>
             <TabItem Header="Stats" />
         </TabControl>
     </DockPanel>

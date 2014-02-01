@@ -86,12 +86,20 @@
     </ApplicationDefinition>
     <Compile Include="AppContext.cs" />
     <Compile Include="DataManager.cs" />
+    <Compile Include="views\ActionsView.xaml.cs">
+      <DependentUpon>ActionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\EditDialogBox.xaml.cs">
+      <DependentUpon>EditDialogBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="views\validators\PlaceNameValidationRule.cs" />
     <Compile Include="views\PlacesView.xaml.cs">
       <DependentUpon>PlacesView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="views\validators\StringRangeValidationRule.cs" />
     <Compile Include="wlan\Interop.cs" />
     <Compile Include="wlan\WlanApi.cs" />
     <Compile Include="wlan\WlanDataManager.cs" />
@@ -107,6 +115,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="views\ActionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\EditDialogBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="views\HomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
