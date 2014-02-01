@@ -123,6 +123,15 @@
   <data name="DeletePlaceTitle" xml:space="preserve">
     <value>Delete Place</value>
   </data>
+  <data name="ErrMsgNameAlreadyPresent" xml:space="preserve">
+    <value>The name {0} is already present!</value>
+  </data>
+  <data name="ErrMsgRequired" xml:space="preserve">
+    <value>A value is required!</value>
+  </data>
+  <data name="ErrMsgStringTooLong" xml:space="preserve">
+    <value>The name is too long! (Max {0})</value>
+  </data>
   <data name="ResetCntPlace" xml:space="preserve">
     <value>Do you want to reset statistics for this place?</value>
   </data>

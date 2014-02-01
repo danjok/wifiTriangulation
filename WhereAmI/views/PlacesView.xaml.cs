@@ -47,8 +47,25 @@ namespace WhereAmI.views
 
         private void btnChangePlace_Click(object sender, RoutedEventArgs e)
         {
-            //TODO register place with new wifis ?
-            PlaceName.IsReadOnly = !PlaceName.IsReadOnly;
+            // Instantiate the dialog box
+            EditDialogBox dlg = new EditDialogBox();
+
+            // Configure the dialog box
+            dlg.Owner = Window.GetWindow(this) as MainWindow;;
+            dlg.DataContext = placesViewData.SelectedItem;
+
+            // Open the dialog box modally 
+            dlg.ShowDialog();
+
+            var ctx = DataManager.Instance.context;
+            if (dlg.DialogResult == true)
+            {
+                ctx.SaveChangesAsync();
+            }
+            else
+            {
+                ctx.Entry<Place>(placesViewData.SelectedItem as Place).Reload();
+            }
         }
 
         private void btnDeletePlace_Click(object sender, RoutedEventArgs e)
@@ -88,10 +105,7 @@ namespace WhereAmI.views
                 //Only to test
                 p.Cnt += 10;
                 //p.Cnt = 0;
-
                 var ctx = DataManager.Instance.context;
-                var pEntity = ctx.Places.Find(p.PlaceId);
-                ctx.Entry(pEntity).Property(v => v.Cnt).CurrentValue = p.Cnt;
                 ctx.SaveChangesAsync();
             }
         }

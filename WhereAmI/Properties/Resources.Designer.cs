@@ -79,6 +79,33 @@ namespace WhereAmI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The name {0} is already present!.
+        /// </summary>
+        internal static string ErrMsgNameAlreadyPresent {
+            get {
+                return ResourceManager.GetString("ErrMsgNameAlreadyPresent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A value is required!.
+        /// </summary>
+        internal static string ErrMsgRequired {
+            get {
+                return ResourceManager.GetString("ErrMsgRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name is too long! (Max {0}).
+        /// </summary>
+        internal static string ErrMsgStringTooLong {
+            get {
+                return ResourceManager.GetString("ErrMsgStringTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want to reset statistics for this place?.
         /// </summary>
         internal static string ResetCntPlace {
