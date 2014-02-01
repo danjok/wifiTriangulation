@@ -69,8 +69,19 @@ namespace WhereAmI.models
             InActions = new ObservableCollection<Action>();
         }
 
-        public string Snapshot { get; set; }
-        private List<Wifi> Wifis { get; set; }
+        private string _snapshot;
+        public string Snapshot {
+            get
+            {
+                return this._snapshot; 
+            } set{
+                this._snapshot = value;
+                Wifis = Place.deserializationSnapshot(value);
+            }
+        }
+
+        [System.ComponentModel.DataAnnotations.Schema.NotMapped]
+        public List<Wifi> Wifis { get; set; }
 
         //Relationships
         //public virtual ICollection<Action> BeforeActions { get; set; }
@@ -95,14 +106,18 @@ namespace WhereAmI.models
 
         static public List<Wifi> deserializationSnapshot(string ser)
         {
-            List<Wifi> snapshot = null;
+            List<Wifi> snapshot = new List<Wifi>();
             string[] wifiStrings = ser.Split(';');
             string[] sProperties;
 
             foreach (string ws in wifiStrings)
             {
                 sProperties = ws.Split(':');
-                snapshot.Add(new Wifi { SSID = sProperties[0], PowerPerc = int.Parse(sProperties[1]) });
+                if (sProperties.Length == 2)
+                    snapshot.Add(new Wifi { 
+                        SSID = sProperties[0], 
+                        PowerPerc = int.Parse(sProperties[1])
+                    });
             }
 
             return snapshot;
