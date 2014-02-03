@@ -9,6 +9,7 @@ using WhereAmI.models;
 using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
+using WhereAmI.triangulation;
 
 namespace WhereAmI
 {
@@ -51,7 +52,8 @@ namespace WhereAmI
         public ObservableCollection<Wifi> wifis;
         public CurrentState currentState;
         
-        public AppContext context; 
+        public AppContext context;
+        public Algorithm algo;
 
         private DataManager()
         {
@@ -63,6 +65,7 @@ namespace WhereAmI
             //loadData();
             //loadDataDB();
             context = new AppContext();
+            algo = new Algorithm();
         }
 
         public static DataManager Instance
@@ -160,10 +163,9 @@ namespace WhereAmI
         {
             Random random = new Random();
             int randomNumber = random.Next(0, 3);
-            currentState.Place = context.Places.AsEnumerable<Place>().ElementAt<Place>(0);
             //currentState.Place = places.ElementAt(random.Next(0, places.Count));
-            //TODO
-            //currentState.Place = triangAlgo(places, wifis);
+            //currentState.Place = context.Places.AsEnumerable<Place>().ElementAt<Place>(0);
+            currentState.Place = algo.computeCurrentPlace(wifis);
         }
     }
 }

@@ -86,6 +86,7 @@
     </ApplicationDefinition>
     <Compile Include="AppContext.cs" />
     <Compile Include="DataManager.cs" />
+    <Compile Include="triangulation\Algorithm.cs" />
     <Compile Include="views\ActionsView.xaml.cs">
       <DependentUpon>ActionsView.xaml</DependentUpon>
     </Compile>
@@ -184,6 +185,11 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="triangulation\basic_triangulation_algorithm.cpp" />
+    <Content Include="triangulation\basic_triangulation_algorithm.h" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
