@@ -1,8 +1,9 @@
-﻿<UserControl x:Class="WhereAmI.views.PlacesView"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WhereAmI.views" x:Class="WhereAmI.views.PlacesView"
              Loaded="OnControlLoaded">
-    <Grid >
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="5" />
@@ -12,94 +13,114 @@
                         ListView: ItemsSource is assigned in the .cs file
                         It is possible to describe a presentation template
                     -->
-        <ListView Grid.Column="0" Margin="10" Name="placesViewData" DisplayMemberPath="Name" SelectionMode="Single" SelectionChanged="placesViewData_Selected"></ListView>
+        <ListView Grid.Column="0" Margin="10" x:Name="placesViewData" DisplayMemberPath="Name" SelectionMode="Single" SelectionChanged="placesViewData_Selected"/>
         <!-- GridSplitter to resize column -->
-        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-        <StackPanel DataContext="{Binding ElementName=placesViewData, Path=SelectedItem}" Name="placeViewDetail" Grid.Column="2" Margin="10,0,0,0" Visibility="Hidden">
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" ShowsPreview="True" Background="Silver"/>
+        <Grid DataContext="{Binding SelectedItem, ElementName=placesViewData}" x:Name="placeViewDetail" Grid.Column="2" Margin="10,0,0,0" Visibility="Hidden">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
             <!-- 
                             Note: this is the detail element 
                             The binding is from data of another viewer element (ElementName) and precisely
                             the element bound is given by the property SelectedItem
                         -->
-            <TextBox Name="PlaceName" Text="{Binding Name}" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" IsReadOnly="True"></TextBox>
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" >
-                <Label Content="Time" FontSize="15"></Label>
-                <TextBlock Text="{Binding Cnt}" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap"></TextBlock>
+            <TextBox Grid.Row="0"  x:Name="PlaceName" Text="{Binding Name}" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" IsReadOnly="True"/>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Left" Orientation="Horizontal" >
+                <Label Content="Time" FontSize="15"/>
+                <TextBlock Text="{Binding Cnt}" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap"/>
             </StackPanel>
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" >
+            <StackPanel Grid.Row="2" HorizontalAlignment="Left" Orientation="Horizontal" >
                 <!-- binding of eventhandlers to controls-->
-                <Button Name="btnChangePlace" Click="btnChangePlace_Click" Width="103" FontSize="15" Content="Edit"  HorizontalAlignment="Left"/>
-                <Button Name="btnDeletePlace" Click="btnDeletePlace_Click"  Width="103" FontSize="15" Margin="10,0,0,0" HorizontalAlignment="Left">Delete</Button>
-                <Button Name="btnResetStatPlace" Click="btnResetStatPlace_Click"  Width="103" FontSize="15" Margin="10,0,0,0" HorizontalAlignment="Left">Reset</Button>
+                <Button x:Name="btnChangePlace" Click="btnChangePlace_Click" Width="103" FontSize="15" Content="Edit"  HorizontalAlignment="Left"/>
+                <Button x:Name="btnDeletePlace" Click="btnDeletePlace_Click"  Width="103" FontSize="15" Margin="10,0,0,0" HorizontalAlignment="Left" Content="Delete"/>
+                <Button x:Name="btnResetStatPlace" Click="btnResetStatPlace_Click"  Width="103" FontSize="15" Margin="10,0,0,0" HorizontalAlignment="Left" Content="Reset"/>
             </StackPanel>
+            <Label Grid.Row="3" Content="Snapshot" FontSize="15" FontWeight="Bold"/>
             <!--Items list as in the first tab-->
-            <ItemsControl ItemsSource="{Binding Wifis}" Name="snapshot" HorizontalAlignment="Left">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="0,10,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="200" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock FontSize="15" Grid.Column="0"  Text="{Binding SSID}" />
-                            <ProgressBar  Grid.Column="1"  Margin="10,0,0,0"  Minimum="0" Maximum="100" Value="{Binding PowerPerc}" />
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-            <Label  Grid.Row="2" Content="Actions" FontSize="15" FontWeight="Bold"/>
-            <Grid Height="100">
+            <ScrollViewer Grid.Row="4" VerticalScrollBarVisibility="Visible" CanContentScroll="True" HorizontalScrollBarVisibility="Auto">
+                <ItemsControl
+                    ItemsSource="{Binding Wifis}" 
+					x:Name="snapshot" 
+					HorizontalAlignment="Left"
+                          >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="200" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock FontSize="15" Grid.Column="0"  Text="{Binding SSID}" />
+                                <ProgressBar  Grid.Column="1"  Margin="10,0,0,0"  Minimum="0" Maximum="100" Value="{Binding PowerPerc}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <GridSplitter Grid.Row="5" Height="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" ShowsPreview="True" Background="Silver"/>
+            <Label Grid.Row="6" Content="Actions" FontSize="15" FontWeight="Bold"/>
+            <Grid Grid.Row="7">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition />
+                    <RowDefinition  Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0"
-                   Grid.Column="0"
-                   Text="Actions"                 
-                   FontSize="15"/>
+					Grid.Column="0"
+					Text="Configured"                 
+					FontSize="15"/>
                 <TextBlock Grid.Row="0"
-                   Grid.Column="1"
-                   Text="Available actions" 
-                   FontSize="15"/>
+					Grid.Column="1"
+					Text="Available" 
+					FontSize="15"/>
                 <ListBox Grid.Row="1"
-                 Grid.Column="0"
-                 x:Name="lbActions" 
-                 PreviewMouseLeftButtonDown="ListBox_PreviewMouseLeftButtonDown"
-                 Drop="ListBox_DropActions" 
-                 AllowDrop="True"
-                 ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0"
-                 ItemsSource="{Binding InActions}"
+					Grid.Column="0"
+					x:Name="lbActions" 
+					PreviewMouseLeftButtonDown="ListBox_PreviewMouseLeftButtonDown"
+					Drop="ListBox_DropActions" 
+					AllowDrop="True"
+					ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+					ItemsSource="{Binding InActions}"
                  >
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock
-                        Text="{Binding Name}"
-                        HorizontalAlignment="Center"
-                        FontSize="15"/>
+								Text="{Binding Name}"
+								HorizontalAlignment="Center"
+								FontSize="15"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
                 <ListBox Grid.Row="1"
-                 Grid.Column="1"
-                 x:Name="lbAvailableActions"
-                 PreviewMouseLeftButtonDown="ListBox_PreviewMouseLeftButtonDown"
-                 AllowDrop="True"
-                 Drop="ListBox_DropAvailableActions" 
-                 ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,10,0">
+					Grid.Column="1"
+					x:Name="lbAvailableActions"
+					PreviewMouseLeftButtonDown="ListBox_PreviewMouseLeftButtonDown"
+					AllowDrop="True"
+					Drop="ListBox_DropAvailableActions" 
+					ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,10,0"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock
-                        Text="{Binding Name}"
-                        HorizontalAlignment="Center"
-                        FontSize="15"/>
+								Text="{Binding Name}"
+								HorizontalAlignment="Center"
+								FontSize="15"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </Grid>
-        </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

@@ -25,7 +25,7 @@ namespace WhereAmI.views
     public partial class PlacesView : UserControl
     {
         ObservableCollection<models.Action> availableActions = new ObservableCollection<models.Action>();
-        Place selectedPlace;
+        Place selectedPlace;        
         public PlacesView()
         {
             InitializeComponent();
@@ -48,16 +48,19 @@ namespace WhereAmI.views
             // After the data is loaded call the DbSet<T>.Local property  
             // to use the DbSet<T> as a binding source. 
             placesViewData.ItemsSource = ctx.Places.Local;
+            //To update the list Actions-Place.InActions when Actions is modified
+            computeAvailablePlaces();
         }
 
         private void btnChangePlace_Click(object sender, RoutedEventArgs e)
         {
+            string name=selectedPlace.Name;
             // Instantiate the dialog box
             EditDialogBox dlg = new EditDialogBox();
 
             // Configure the dialog box
             dlg.Owner = Window.GetWindow(this) as MainWindow;;
-            dlg.DataContext = placesViewData.SelectedItem;
+            dlg.DataContext = selectedPlace;
 
             // Open the dialog box modally 
             dlg.ShowDialog();
@@ -65,11 +68,13 @@ namespace WhereAmI.views
             var ctx = DataManager.Instance.context;
             if (dlg.DialogResult == true)
             {
-                ctx.SaveChangesAsync();
+                ctx.SaveChanges();
             }
             else
             {
-                ctx.Entry<Place>(placesViewData.SelectedItem as Place).Reload();
+                selectedPlace.Name = name;
+                ctx.SaveChanges();
+                //ctx.Entry<Place>(placesViewData.SelectedItem as Place).Reload();
             }
         }
 
@@ -86,12 +91,11 @@ namespace WhereAmI.views
             {
                 //places.Remove(placesViewData.SelectedItem as Place);
                 var ctx = DataManager.Instance.context;
-                ctx.Places.Remove(placesViewData.SelectedItem as Place);
+                ctx.Places.Remove(selectedPlace);
                 ctx.SaveChangesAsync();
 
                 //To hide UI buttons
-                placeViewDetail.Visibility = System.Windows.Visibility.Hidden;
-                //this.placesViewData.Items.Refresh();
+                placeViewDetail.Visibility = System.Windows.Visibility.Hidden;           
             }
         }
 
@@ -106,27 +110,28 @@ namespace WhereAmI.views
 
             if (result == MessageBoxResult.Yes)
             {
-                Place p = placesViewData.SelectedItem as Place;
-                //Only to test
-                p.Cnt += 10;
-                //p.Cnt = 0;
+                selectedPlace.Cnt = 0;
                 var ctx = DataManager.Instance.context;
                 ctx.SaveChangesAsync();
             }
         }
 
-        
-        private void placesViewData_Selected(object sender, RoutedEventArgs e)
+        private void computeAvailablePlaces()
         {
-            placeViewDetail.Visibility = System.Windows.Visibility.Visible;
-            selectedPlace = placesViewData.SelectedItem as Place;
-            var ctx = DataManager.Instance.context;
             if (selectedPlace != null)
             {
+                var ctx = DataManager.Instance.context;
                 var actionsIdList = from a in selectedPlace.InActions select a.ActionId;
                 availableActions.Clear();
                 ctx.Actions.Where(a => !actionsIdList.Contains(a.ActionId)).ToList().ForEach(availableActions.Add);
             }
+        }
+
+        private void placesViewData_Selected(object sender, RoutedEventArgs e)
+        {
+            placeViewDetail.Visibility = System.Windows.Visibility.Visible;
+            selectedPlace = placesViewData.SelectedItem as Place;
+            computeAvailablePlaces();
         }
 
 
