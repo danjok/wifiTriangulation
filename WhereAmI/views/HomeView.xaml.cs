@@ -41,7 +41,7 @@ namespace WhereAmI.views
             //DataManager.Instance.places.Add(new Place(randomNumber + "FFF", DataManager.Instance.wifis.ToList<Wifi>()));
             var ctx = DataManager.Instance.context;
             ctx.Places.Add(new Place() { Name = "Prova", Cnt = 0, Snapshot = Place.serializationSnapshot(DataManager.Instance.wifis.ToList<Wifi>())});
-            ctx.SaveChangesAsync();
+            ctx.SaveChanges();
         }
 
         //Refresh the system from UI manually
@@ -49,8 +49,7 @@ namespace WhereAmI.views
         //refresh periodically
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-            DataManager.Instance.loadWifis();
-            DataManager.Instance.computeCurrentPlace();
+            DataManager.Instance.refresh();
         }
     }
 }

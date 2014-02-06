@@ -2,7 +2,12 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:tabData="clr-namespace:WhereAmI.views"
-        Title="WhereAmI" Height="350" Width="525">
+        Title="WhereAmI" 
+        Height="550" 
+        Width="525"
+        MinHeight="250"
+        MinWidth="225"
+        Loaded="OnLoaded">
     <!-- 
         The external container is a DockPanel, it is possible to define the position of element 
         according to border, center element has to be described as last

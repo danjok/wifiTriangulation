@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using WhereAmI.models;
 using WhereAmI.wlan;
 
@@ -24,9 +25,43 @@ namespace WhereAmI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private System.Timers.Timer timer;
         public MainWindow()
         {
             InitializeComponent();
+            DataManager.Instance.init();
+            /*
+            dt = new DispatcherTimer();
+            dt.Tick += new EventHandler(timer_Tick);
+            dt.Interval = new TimeSpan(0, 0, 10);    
+        
+             */
+            timer = new System.Timers.Timer();
+            timer.Interval = 1000; //10 sec
+            timer.Elapsed += new System.Timers.ElapsedEventHandler(timerElapsed);
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            timer.Start();
+        }
+
+        /*
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            DataManager.Instance.refresh();
+        }
+        */
+
+        void timerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            this.Dispatcher.BeginInvoke(
+                DispatcherPriority.Background,
+                (System.Action)delegate()
+                {
+                    //System.Threading.Thread.Sleep(5000);
+                    DataManager.Instance.refresh();
+                });
         }
     }
 }

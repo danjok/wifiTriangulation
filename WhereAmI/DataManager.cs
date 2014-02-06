@@ -15,7 +15,9 @@ namespace WhereAmI
 {
     public class CurrentState : INotifyPropertyChanged
     {
+        private DateTime date;
         private Place _place;
+        private Place _old;
         //Property Definition
         public Place Place
         {
@@ -27,7 +29,13 @@ namespace WhereAmI
                 {
                     this._place = value;
                     NotifyPropertyChanged("Place");
+                    this.date = DateTime.Now;
                 }
+                var now = DateTime.Now;
+                TimeSpan diff = now.Subtract(this.date);
+                this.date = now;
+                this._place.Cnt += (int)diff.TotalSeconds;
+                DataManager.Instance.context.SaveChanges();
             }
         }
 
@@ -55,17 +63,19 @@ namespace WhereAmI
         public AppContext context;
         public Algorithm algo;
 
-        private DataManager()
+        public void init()
         {
-            //TODO Connection to DB
-            //places = new ObservableCollection<Place>();
-
             wifis = new ObservableCollection<Wifi>();
             currentState = new CurrentState();
             //loadData();
             //loadDataDB();
             context = new AppContext();
             algo = new Algorithm();
+        }
+
+        private DataManager()
+        {
+            
         }
 
         public static DataManager Instance
@@ -138,10 +148,17 @@ namespace WhereAmI
 
         //Read the current wifis networks connections from the WLAN API
         //update the wifis list
-        public void loadWifis()
+        private void loadWifis()
         {
             //loadWifisMockVersion();
-            wlan.WlanDataManager.loadWifis();
+            try
+            {
+                wlan.WlanDataManager.loadWifis();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         private void loadWifisMockVersion(){
@@ -159,13 +176,19 @@ namespace WhereAmI
         //Retrieve the current place from the list of recorded places
         //using the triangulation algorithm 
         //that receives in input the list of current detected wifis
-        public void computeCurrentPlace()
+        private void computeCurrentPlace()
         {
             Random random = new Random();
             int randomNumber = random.Next(0, 3);
             //currentState.Place = places.ElementAt(random.Next(0, places.Count));
             //currentState.Place = context.Places.AsEnumerable<Place>().ElementAt<Place>(0);
             currentState.Place = algo.computeCurrentPlace(wifis);
+        }
+
+        public void refresh()
+        {
+            loadWifis();
+            computeCurrentPlace();
         }
     }
 }
