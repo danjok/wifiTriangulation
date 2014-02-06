@@ -39,10 +39,35 @@ namespace WhereAmI.views
             // creates entity objects and adds them to the context.
             var ctx = DataManager.Instance.context;
             ctx.Actions.Load();
-
+            
             // After the data is loaded call the DbSet<T>.Local property  
             // to use the DbSet<T> as a binding source. 
             actionsViewData.ItemsSource = ctx.Actions.Local;
+            actionsViewData.CommitEdit(DataGridEditingUnit.Cell, true);
         }
+
+        private void editEnd(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            DataManager.Instance.context.SaveChangesAsync();
+            //ctx.Entry<models.Action>(actionsViewData.SelectedItem as models.Action).Reload();
+        }
+
+        private void btnDeleteAction_Click(object sender, RoutedEventArgs e)
+        {
+            // Display message box
+            MessageBoxResult result = MessageBox.Show(
+                Properties.Resources.DeleteAction,
+                Properties.Resources.DeleteActionTitle,
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                var ctx = DataManager.Instance.context;
+                ctx.Actions.Remove(actionsViewData.SelectedItem as models.Action);
+                ctx.SaveChanges();
+            }
+        }
+
     }
 }

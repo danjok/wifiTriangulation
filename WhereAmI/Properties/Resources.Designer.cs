@@ -61,6 +61,24 @@ namespace WhereAmI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you want to delete this action?.
+        /// </summary>
+        internal static string DeleteAction {
+            get {
+                return ResourceManager.GetString("DeleteAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Action.
+        /// </summary>
+        internal static string DeleteActionTitle {
+            get {
+                return ResourceManager.GetString("DeleteActionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want to delete this place?.
         /// </summary>
         internal static string DeletePlace {
