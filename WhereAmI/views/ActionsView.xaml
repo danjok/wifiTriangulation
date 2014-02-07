@@ -18,7 +18,7 @@
                     </Binding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Command">
+                <DataGridTextColumn Header="Command" Width="*">
                     <DataGridTextColumn.Binding>
                         <Binding Path="Command" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
                         <Binding.ValidationRules>
@@ -29,7 +29,7 @@
                     </Binding>
                 </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTemplateColumn Header="" IsReadOnly="True">
+                <DataGridTemplateColumn Header="" IsReadOnly="True" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="Delete" Click="btnDeleteAction_Click"/>
