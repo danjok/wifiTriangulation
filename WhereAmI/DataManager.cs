@@ -148,7 +148,7 @@ namespace WhereAmI
 
         //Read the current wifis networks connections from the WLAN API
         //update the wifis list
-        private void loadWifis()
+        public void loadWifis()
         {
             //loadWifisMockVersion();
             try
