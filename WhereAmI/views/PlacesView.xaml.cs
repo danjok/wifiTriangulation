@@ -24,12 +24,10 @@ namespace WhereAmI.views
     /// </summary>
     public partial class PlacesView : UserControl
     {
-        ObservableCollection<models.Action> availableActions = new ObservableCollection<models.Action>();
         Place selectedPlace;        
         public PlacesView()
         {
-            InitializeComponent();
-            lbAvailableActions.ItemsSource = availableActions;
+            InitializeComponent();    
         }
 
         private void OnControlLoaded(object sender, RoutedEventArgs e)
@@ -49,7 +47,7 @@ namespace WhereAmI.views
             // to use the DbSet<T> as a binding source. 
             placesViewData.ItemsSource = ctx.Places.Local;
             //To update the list Actions-Place.InActions when Actions is modified
-            computeAvailablePlaces();
+            this.listActions.computeAvailablePlaces();
         }
 
         private void btnChangePlace_Click(object sender, RoutedEventArgs e)
@@ -116,87 +114,12 @@ namespace WhereAmI.views
             }
         }
 
-        private void computeAvailablePlaces()
-        {
-            if (selectedPlace != null)
-            {
-                var ctx = DataManager.Instance.context;
-                var actionsIdList = from a in selectedPlace.InActions select a.ActionId;
-                availableActions.Clear();
-                ctx.Actions.Where(a => !actionsIdList.Contains(a.ActionId)).ToList().ForEach(availableActions.Add);
-            }
-        }
-
         private void placesViewData_Selected(object sender, RoutedEventArgs e)
         {
             placeViewDetail.Visibility = System.Windows.Visibility.Visible;
             selectedPlace = placesViewData.SelectedItem as Place;
-            computeAvailablePlaces();
-        }
-
-
-        ListBox dragSource = null;
-        private void ListBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            ListBox parent = (ListBox)sender;
-            dragSource = parent;
-            object data = GetDataFromListBox(dragSource, e.GetPosition(parent));
-
-            if (data != null)
-            {
-                var dragData = new DataObject(typeof(WhereAmI.models.Action), data);
-                DragDrop.DoDragDrop(parent, dragData, DragDropEffects.Move);
-            }
-        }
-        
-        #region GetDataFromListBox(ListBox,Point)
-        private static object GetDataFromListBox(ListBox source, Point point)
-        {
-            UIElement element = source.InputHitTest(point) as UIElement;
-            if (element != null)
-            {
-                object data = DependencyProperty.UnsetValue;
-                while (data == DependencyProperty.UnsetValue)
-                {
-                    data = source.ItemContainerGenerator.ItemFromContainer(element);
-                    if (data == DependencyProperty.UnsetValue)
-                    {
-                        element = VisualTreeHelper.GetParent(element) as UIElement;
-                    }
-                    if (element == source)
-                    {
-                        return null;
-                    }
-                }
-                if (data != DependencyProperty.UnsetValue)
-                {
-                    return data;
-                }
-            }
-            return null;
-        }
-        #endregion
-
-        private void ListBox_DropAvailableActions(object sender, DragEventArgs e)
-        {
-            if (dragSource.Equals(sender))
-                return;
-            var dataObj = e.Data as DataObject;
-            var data = dataObj.GetData(typeof(WhereAmI.models.Action)) as WhereAmI.models.Action;
-            selectedPlace.InActions.Remove(data);
-            availableActions.Add(data);
-            DataManager.Instance.context.SaveChanges();
-        }
-
-        private void ListBox_DropActions(object sender, DragEventArgs e)
-        {
-            if (dragSource.Equals(sender))
-                return;
-            var dataObj = e.Data as DataObject;
-            var data = dataObj.GetData(typeof(WhereAmI.models.Action)) as WhereAmI.models.Action;
-            availableActions.Remove(data);
-            selectedPlace.InActions.Add(data);
-            DataManager.Instance.context.SaveChanges();
+            this.listActions.selectedPlace = selectedPlace;
+            this.listActions.computeAvailablePlaces();
         }
     }
 }

@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="WhereAmI.views.ListBoxActions"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+    <Label Grid.Row="0" Content="Actions" FontSize="15" FontWeight="Bold"/>
+        <Grid Grid.Row="1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition  Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+					Grid.Column="0"
+					Text="Configured"                 
+					FontSize="15"/>
+        <TextBlock Grid.Row="0"
+					Grid.Column="1"
+					Text="Available" 
+					FontSize="15"/>
+        <ListBox Grid.Row="1"
+					Grid.Column="0"
+					x:Name="lbActions" 
+					PreviewMouseLeftButtonDown="ListBox_PreviewMouseLeftButtonDown"
+					Drop="ListBox_DropActions" 
+					AllowDrop="True"
+					ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+					ItemsSource="{Binding InActions}"
+                 >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock
+								Text="{Binding Name}"
+								HorizontalAlignment="Center"
+								FontSize="15"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <ListBox Grid.Row="1"
+					Grid.Column="1"
+					x:Name="lbAvailableActions"
+					PreviewMouseLeftButtonDown="ListBox_PreviewMouseLeftButtonDown"
+					AllowDrop="True"
+					Drop="ListBox_DropAvailableActions" 
+					ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,10,0"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock
+								Text="{Binding Name}"
+								HorizontalAlignment="Center"
+								FontSize="15"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+    </Grid>
+</UserControl>

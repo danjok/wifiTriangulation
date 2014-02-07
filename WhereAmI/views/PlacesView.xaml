@@ -13,7 +13,7 @@
                         ListView: ItemsSource is assigned in the .cs file
                         It is possible to describe a presentation template
                     -->
-        <ListView Grid.Column="0" Margin="10" x:Name="placesViewData" DisplayMemberPath="Name" SelectionMode="Single" SelectionChanged="placesViewData_Selected"/>
+        <ListView Grid.Column="0" Margin="10" x:Name="placesViewData" DisplayMemberPath="PlaceId" SelectionMode="Single" SelectionChanged="placesViewData_Selected"/>
         <!-- GridSplitter to resize column -->
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" ShowsPreview="True" Background="Silver"/>
         <Grid DataContext="{Binding SelectedItem, ElementName=placesViewData}" x:Name="placeViewDetail" Grid.Column="2" Margin="10,0,0,0" Visibility="Hidden">
@@ -24,7 +24,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="5"/>
-                <RowDefinition Height="Auto"/>
+                <!--<RowDefinition Height="Auto"/>-->
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <!-- 
@@ -60,67 +60,15 @@
                                 </Grid.ColumnDefinitions>
                                 <TextBlock FontSize="15" Grid.Column="0"  Text="{Binding SSID}" />
                                 <ProgressBar  Grid.Column="1"  Margin="10,0,0,0"  Minimum="0" Maximum="100" Value="{Binding PowerPerc}" />
+                                <TextBlock Grid.Column="1"   FontSize="15" Text="{Binding PowerPerc}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
             <GridSplitter Grid.Row="5" Height="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" ShowsPreview="True" Background="Silver"/>
-            <Label Grid.Row="6" Content="Actions" FontSize="15" FontWeight="Bold"/>
-            <Grid Grid.Row="7">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition  Height="*"/>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0"
-					Grid.Column="0"
-					Text="Configured"                 
-					FontSize="15"/>
-                <TextBlock Grid.Row="0"
-					Grid.Column="1"
-					Text="Available" 
-					FontSize="15"/>
-                <ListBox Grid.Row="1"
-					Grid.Column="0"
-					x:Name="lbActions" 
-					PreviewMouseLeftButtonDown="ListBox_PreviewMouseLeftButtonDown"
-					Drop="ListBox_DropActions" 
-					AllowDrop="True"
-					ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0"
-                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
-					ItemsSource="{Binding InActions}"
-                 >
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock
-								Text="{Binding Name}"
-								HorizontalAlignment="Center"
-								FontSize="15"/>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                <ListBox Grid.Row="1"
-					Grid.Column="1"
-					x:Name="lbAvailableActions"
-					PreviewMouseLeftButtonDown="ListBox_PreviewMouseLeftButtonDown"
-					AllowDrop="True"
-					Drop="ListBox_DropAvailableActions" 
-					ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,10,0"
-                    ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock
-								Text="{Binding Name}"
-								HorizontalAlignment="Center"
-								FontSize="15"/>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </Grid>
+            <local:ListBoxActions x:Name="listActions" Grid.Row="6">
+            </local:ListBoxActions> 
         </Grid>
     </Grid>
 </UserControl>
