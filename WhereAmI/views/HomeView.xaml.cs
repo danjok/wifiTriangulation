@@ -34,14 +34,14 @@ namespace WhereAmI.views
         }
 
         private void btnAddPlace_Click(object sender, RoutedEventArgs e)
-        {
-            Random random = new Random();
-            int randomNumber = random.Next(0, 30);
+        {                     
+            WizardDialog dlg = new WizardDialog();
+
+            // Configure the dialog box
+            dlg.Owner = Window.GetWindow(this) as MainWindow;
             
-            //DataManager.Instance.places.Add(new Place(randomNumber + "FFF", DataManager.Instance.wifis.ToList<Wifi>()));
-            var ctx = DataManager.Instance.context;
-            ctx.Places.Add(new Place() { Name = "Prova", Cnt = 0, Snapshot = Place.serializationSnapshot(DataManager.Instance.wifis.ToList<Wifi>())});
-            ctx.SaveChanges();
+            // Open the dialog box modally 
+            dlg.ShowDialog();         
         }
 
         //Refresh the system from UI manually

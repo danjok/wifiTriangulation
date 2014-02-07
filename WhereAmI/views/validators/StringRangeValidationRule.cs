@@ -31,7 +31,7 @@ namespace WhereAmI.views.validators
             CultureInfo cultureInfo)
         {
             string inputString = (value ?? string.Empty).ToString();
-            if (inputString.Length < this.MinimumLength)
+            if (inputString.Length < this.MinimumLength || inputString.Trim().Length==0)
                  return new ValidationResult(false, Properties.Resources.ErrMsgRequired);
             if (this.MaximumLength > 0 && inputString.Length > this.MaximumLength)
                 return new ValidationResult(false, string.Format(Properties.Resources.ErrMsgStringTooLong, this._maximumLength));
