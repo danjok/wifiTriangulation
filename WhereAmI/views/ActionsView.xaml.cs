@@ -48,7 +48,7 @@ namespace WhereAmI.views
 
         private void editEnd(object sender, DataGridCellEditEndingEventArgs e)
         {
-            DataManager.Instance.context.SaveChangesAsync();
+            DataManager.Instance.context.SaveChanges();
             //ctx.Entry<models.Action>(actionsViewData.SelectedItem as models.Action).Reload();
         }
 

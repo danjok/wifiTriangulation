@@ -90,7 +90,7 @@ namespace WhereAmI.views
                 //places.Remove(placesViewData.SelectedItem as Place);
                 var ctx = DataManager.Instance.context;
                 ctx.Places.Remove(selectedPlace);
-                ctx.SaveChangesAsync();
+                ctx.SaveChanges();
 
                 //To hide UI buttons
                 placeViewDetail.Visibility = System.Windows.Visibility.Hidden;           
@@ -110,7 +110,7 @@ namespace WhereAmI.views
             {
                 selectedPlace.Cnt = 0;
                 var ctx = DataManager.Instance.context;
-                ctx.SaveChangesAsync();
+                ctx.SaveChanges();
             }
         }
 

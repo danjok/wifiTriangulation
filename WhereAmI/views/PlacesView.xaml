@@ -13,7 +13,7 @@
                         ListView: ItemsSource is assigned in the .cs file
                         It is possible to describe a presentation template
                     -->
-        <ListView Grid.Column="0" Margin="10" x:Name="placesViewData" DisplayMemberPath="PlaceId" SelectionMode="Single" SelectionChanged="placesViewData_Selected"/>
+        <ListView Grid.Column="0" Margin="10" x:Name="placesViewData" DisplayMemberPath="Name" SelectionMode="Single" SelectionChanged="placesViewData_Selected"/>
         <!-- GridSplitter to resize column -->
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" ShowsPreview="True" Background="Silver"/>
         <Grid DataContext="{Binding SelectedItem, ElementName=placesViewData}" x:Name="placeViewDetail" Grid.Column="2" Margin="10,0,0,0" Visibility="Hidden">

@@ -48,6 +48,7 @@
                                 <!-- Bind view element to a model property -->
                                 <TextBlock Grid.Column="0" FontSize="15"  Text="{Binding SSID}" />
                                 <ProgressBar  Grid.Column="1"  Margin="10,0,0,0"  Minimum="0" Maximum="100" Value="{Binding PowerPerc}" />
+                                <TextBlock Grid.Column="1"   FontSize="15" Text="{Binding PowerPerc}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
