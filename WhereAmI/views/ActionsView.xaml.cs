@@ -31,15 +31,7 @@ namespace WhereAmI.views
         {
             //placesViewData.ItemsSource = DataManager.Instance.places;
 
-            // Load is an extension method on IQueryable,  
-            // defined in the System.Data.Entity namespace. 
-            // This method enumerates the results of the query,  
-            // similar to ToList but without creating a list. 
-            // When used with Linq to Entities this method  
-            // creates entity objects and adds them to the context.
-            var ctx = DataManager.Instance.context;
-            ctx.Actions.Load();
-            
+            var ctx = DataManager.Instance.context;           
             // After the data is loaded call the DbSet<T>.Local property  
             // to use the DbSet<T> as a binding source. 
             actionsViewData.ItemsSource = ctx.Actions.Local;
