@@ -39,7 +39,7 @@ namespace WhereAmI
         
              */
             timer = new System.Timers.Timer();
-            timer.Interval = 1000; //10 sec
+            timer.Interval = 10000; //10 sec
             timer.Elapsed += new System.Timers.ElapsedEventHandler(timerElapsed);
         }
 

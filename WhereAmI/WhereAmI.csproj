@@ -51,6 +51,9 @@
   <PropertyGroup>
     <StartupObject>WhereAmI.App</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -96,11 +99,18 @@
     <Compile Include="views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="views\ListBoxActions.xaml.cs">
+      <DependentUpon>ListBoxActions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\validators\ActionNameValidationRule.cs" />
     <Compile Include="views\validators\PlaceNameValidationRule.cs" />
     <Compile Include="views\PlacesView.xaml.cs">
       <DependentUpon>PlacesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="views\validators\StringRangeValidationRule.cs" />
+    <Compile Include="views\WizardDialog.xaml.cs">
+      <DependentUpon>WizardDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wlan\Interop.cs" />
     <Compile Include="wlan\WlanApi.cs" />
     <Compile Include="wlan\WlanDataManager.cs" />
@@ -128,9 +138,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="views\ListBoxActions.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="views\PlacesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\WizardDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -188,6 +206,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="favicon.ico" />
     <Content Include="triangulation\basic_triangulation_algorithm.cpp" />
     <Content Include="triangulation\basic_triangulation_algorithm.h" />
   </ItemGroup>
