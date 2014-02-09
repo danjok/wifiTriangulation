@@ -27,17 +27,17 @@ namespace WhereAmI.views
         Place selectedPlace;        
         public PlacesView()
         {
-            InitializeComponent();    
+            InitializeComponent();
+            //Data binding at creation
+            // After the data is loaded call the DbSet<T>.Local property  
+            // to use the DbSet<T> as a binding source. 
+            var ctx = DataManager.Instance.context;
+            placesViewData.ItemsSource = ctx.Places.Local;
         }
 
         private void OnControlLoaded(object sender, RoutedEventArgs e)
         {
             //placesViewData.ItemsSource = DataManager.Instance.places; 
-            
-            var ctx = DataManager.Instance.context;
-            // After the data is loaded call the DbSet<T>.Local property  
-            // to use the DbSet<T> as a binding source. 
-            placesViewData.ItemsSource = ctx.Places.Local;
             //To update the list Actions-Place.InActions when Actions is modified
             this.listActions.computeAvailablePlaces();
         }
@@ -56,16 +56,11 @@ namespace WhereAmI.views
             dlg.ShowDialog();
 
             var ctx = DataManager.Instance.context;
-            if (dlg.DialogResult == true)
-            {
-                ctx.SaveChanges();
-            }
-            else
+            if (dlg.DialogResult == false)
             {
                 selectedPlace.Name = name;
-                ctx.SaveChanges();
-                //ctx.Entry<Place>(placesViewData.SelectedItem as Place).Reload();
             }
+            ctx.SaveChanges();
         }
 
         private void btnDeletePlace_Click(object sender, RoutedEventArgs e)

@@ -28,8 +28,10 @@ namespace WhereAmI
         private System.Timers.Timer timer;
         public MainWindow()
         {
-            InitializeComponent();
+            //Init with data loading before view tab creations
             DataManager.Instance.init();
+            InitializeComponent();
+            
             /*
             dt = new DispatcherTimer();
             dt.Tick += new EventHandler(timer_Tick);

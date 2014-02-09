@@ -25,17 +25,18 @@ namespace WhereAmI.views
         public ActionsView()
         {
             InitializeComponent();
+            //Data binding at creation
+            var ctx = DataManager.Instance.context;           
+            // After the data is loaded call the DbSet<T>.Local property  
+            // to use the DbSet<T> as a binding source. 
+            actionsViewData.ItemsSource = ctx.Actions.Local;
+
+            actionsViewData.CommitEdit(DataGridEditingUnit.Cell, true);
         }
 
         private void OnControlLoaded(object sender, RoutedEventArgs e)
         {
             //placesViewData.ItemsSource = DataManager.Instance.places;
-
-            var ctx = DataManager.Instance.context;           
-            // After the data is loaded call the DbSet<T>.Local property  
-            // to use the DbSet<T> as a binding source. 
-            actionsViewData.ItemsSource = ctx.Actions.Local;
-            actionsViewData.CommitEdit(DataGridEditingUnit.Cell, true);
         }
 
         private void editEnd(object sender, DataGridCellEditEndingEventArgs e)
