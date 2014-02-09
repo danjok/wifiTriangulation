@@ -150,7 +150,7 @@ namespace WhereAmI
         //update the wifis list
         public void loadWifis()
         {
-            //loadWifisMockVersion();
+            loadWifisMockVersion();
             try
             {
                 wlan.WlanDataManager.loadWifis();
