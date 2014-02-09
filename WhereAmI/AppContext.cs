@@ -9,7 +9,8 @@ using WhereAmI.models;
 
 namespace WhereAmI
 {
-    //create your custom DB initializer by inheriting one of the intializer 
+    //create your custom DB initializer by inheriting one of the intializer
+    //bogus
     public class AppContextInitializer : CreateDatabaseIfNotExists<AppContext>
     {
         protected override void Seed(AppContext context)
