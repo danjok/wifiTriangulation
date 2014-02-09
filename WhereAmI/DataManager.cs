@@ -71,6 +71,14 @@ namespace WhereAmI
             //loadDataDB();
             context = new AppContext();
             algo = new Algorithm();
+            // Load is an extension method on IQueryable,  
+            // defined in the System.Data.Entity namespace. 
+            // This method enumerates the results of the query,  
+            // similar to ToList but without creating a list. 
+            // When used with Linq to Entities this method  
+            // creates entity objects and adds them to the context.
+            context.Places.Load();
+            context.Actions.Load();
         }
 
         private DataManager()
