@@ -57,7 +57,7 @@ namespace WhereAmI.triangulation
             double maxScore = -1;
             Place mostSimilarPlace = noPlace;
             double tempScore = 0;
-            foreach (Place place in ctx.Places){
+            foreach (Place place in ctx.Places.Local){
                 tempScore = computeScore(place, currentWifis);
                 if (tempScore > maxScore)
                 {

@@ -15,7 +15,7 @@ namespace WhereAmI.views.validators
             string newName = (string)value;
             if (newName.Length == 0)
                 return new ValidationResult(false, null);
-            var otherNames = DataManager.Instance.context.Places
+            var otherNames = DataManager.Instance.context.Places.Local
                 .Where(p => p.Name == newName);
 
             if (otherNames.Count() != 0)

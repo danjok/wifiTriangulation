@@ -40,7 +40,7 @@ namespace WhereAmI.views
                 var ctx = DataManager.Instance.context;
                 var actionsIdList = from a in selectedPlace.InActions select a.ActionId;
                 availableActions.Clear();
-                ctx.Actions.Where(a => !actionsIdList.Contains(a.ActionId)).ToList().ForEach(availableActions.Add);
+                ctx.Actions.Local.Where(a => !actionsIdList.Contains(a.ActionId)).ToList().ForEach(availableActions.Add);
             }
         }
 
