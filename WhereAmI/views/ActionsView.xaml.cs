@@ -26,13 +26,13 @@ namespace WhereAmI.views
         {
             InitializeComponent();
             //Data binding at creation
-            var ctx = DataManager.Instance.context;           
+            var ctx = DataManager.Instance.context;
             // After the data is loaded call the DbSet<T>.Local property  
             // to use the DbSet<T> as a binding source. 
             actionsViewData.ItemsSource = ctx.Actions.Local;
-
+            
             actionsViewData.CommitEdit(DataGridEditingUnit.Cell, true);
-        }
+            }
 
         private void OnControlLoaded(object sender, RoutedEventArgs e)
         {
@@ -41,7 +41,7 @@ namespace WhereAmI.views
 
         private void editEnd(object sender, DataGridCellEditEndingEventArgs e)
         {
-            DataManager.Instance.context.SaveChanges();
+            DataManager.Instance.safeSave();
             //ctx.Entry<models.Action>(actionsViewData.SelectedItem as models.Action).Reload();
         }
 
@@ -58,7 +58,7 @@ namespace WhereAmI.views
             {
                 var ctx = DataManager.Instance.context;
                 ctx.Actions.Remove(actionsViewData.SelectedItem as models.Action);
-                ctx.SaveChanges();
+                DataManager.Instance.safeSave();
             }
         }
 

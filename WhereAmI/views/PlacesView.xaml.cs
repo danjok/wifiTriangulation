@@ -55,12 +55,12 @@ namespace WhereAmI.views
             // Open the dialog box modally 
             dlg.ShowDialog();
 
-            var ctx = DataManager.Instance.context;
+            //var ctx = DataManager.Instance.context;
             if (dlg.DialogResult == false)
             {
                 selectedPlace.Name = name;
             }
-            ctx.SaveChanges();
+            DataManager.Instance.safeSave();
         }
 
         private void btnDeletePlace_Click(object sender, RoutedEventArgs e)
@@ -77,7 +77,7 @@ namespace WhereAmI.views
                 //places.Remove(placesViewData.SelectedItem as Place);
                 var ctx = DataManager.Instance.context;
                 ctx.Places.Remove(selectedPlace);
-                ctx.SaveChanges();
+                DataManager.Instance.safeSave();
 
                 //To hide UI buttons
                 placeViewDetail.Visibility = System.Windows.Visibility.Hidden;           
@@ -96,8 +96,7 @@ namespace WhereAmI.views
             if (result == MessageBoxResult.Yes)
             {
                 selectedPlace.Cnt = 0;
-                var ctx = DataManager.Instance.context;
-                ctx.SaveChanges();
+                DataManager.Instance.safeSave();
             }
         }
 

@@ -43,8 +43,8 @@ namespace WhereAmI.views
             DataManager.Instance.loadWifis();
             p.Snapshot = Place.serializationSnapshot(DataManager.Instance.wifis.ToList<Wifi>());
             ctx.Places.Add(p);
-            ctx.SaveChanges();
-
+            DataManager.Instance.safeSave();
+            
             // Dialog box accepted
             this.DialogResult = true;
         }

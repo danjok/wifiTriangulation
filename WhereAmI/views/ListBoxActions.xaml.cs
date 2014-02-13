@@ -94,7 +94,7 @@ namespace WhereAmI.views
             var data = dataObj.GetData(typeof(WhereAmI.models.Action)) as WhereAmI.models.Action;
             selectedPlace.InActions.Remove(data);
             availableActions.Add(data);
-            DataManager.Instance.context.SaveChanges();
+            DataManager.Instance.safeSave();
         }
 
         private void ListBox_DropActions(object sender, DragEventArgs e)
@@ -105,7 +105,7 @@ namespace WhereAmI.views
             var data = dataObj.GetData(typeof(WhereAmI.models.Action)) as WhereAmI.models.Action;
             availableActions.Remove(data);
             selectedPlace.InActions.Add(data);
-            DataManager.Instance.context.SaveChanges();
+            DataManager.Instance.safeSave();
         }
     }
 }
