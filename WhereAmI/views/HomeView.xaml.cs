@@ -46,11 +46,9 @@ namespace WhereAmI.views
         }
 
         //Refresh the system from UI manually
-        //TODO 
-        //refresh periodically
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-            DataManager.Instance.refresh();
+            BackgroundWork.eventX.Set();
         }
     }
 }
