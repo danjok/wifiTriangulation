@@ -15,7 +15,7 @@
     <DockPanel Margin="0,2,0,0">
         <!-- Not used yet-->
         <StatusBar DockPanel.Dock="Bottom">
-            <TextBlock FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap">StatusBar</TextBlock>
+            <TextBlock Name="Status" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap">StatusBar</TextBlock>
         </StatusBar>
         <!-- Layout based on Tab page -->
         <TabControl Name="Main" BorderThickness="1,0,1,0"  FontSize="24" Margin="0" BorderBrush="Gainsboro">
@@ -55,13 +55,15 @@
             <TabItem Name="HomeTab" Header="Home">
                 <tabData:HomeView />
             </TabItem>
-            <TabItem Header="Places">
+            <TabItem Name="PlacesTab" Header="Places">
                 <tabData:PlacesView />
             </TabItem>
-            <TabItem Header="Actions">
+            <TabItem Name="ActionsTab" Header="Actions">
                 <tabData:ActionsView />
             </TabItem>
-            <TabItem Header="Stats" />
+            <TabItem Name="StatsTab" Header="Stats">
+                <tabData:StatsView />
+            </TabItem>
         </TabControl>
     </DockPanel>
 </Window>

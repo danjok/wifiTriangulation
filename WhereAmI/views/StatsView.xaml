@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="WhereAmI.views.StatsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        Loaded="OnControlLoaded"
+        >
+    <Grid>
+        <DVC:Chart Canvas.Top="0" Canvas.Left="0" Name="mcChart"
+           Background="#00B0C4DE" 
+           BorderThickness="0" 
+           LegendTitle="Places">
+            <DVC:Chart.PlotAreaStyle>
+                <Style TargetType="Grid">
+                    <Setter Property="Background" Value="Transparent"/>
+                </Style>
+            </DVC:Chart.PlotAreaStyle>
+            <DVC:Chart.Style>
+                <Style TargetType="DVC:Chart">
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                </Style>
+            </DVC:Chart.Style>
+            <DVC:Chart.Series>
+                <DVC:PieSeries Title="Experience" 
+            IndependentValueBinding="{Binding Path=Key}"
+            DependentValueBinding="{Binding Path=Value}">
+                </DVC:PieSeries>
+            </DVC:Chart.Series>
+        </DVC:Chart>
+    </Grid>
+</UserControl>
