@@ -51,20 +51,21 @@ namespace WhereAmI.triangulation
 
         private Place noPlace = new Place() {PlaceId=-1, Name = "NoPlace" };
 
-        public Place computeCurrentPlace(ICollection<Wifi> currentWifis)
+        public Place computeCurrentPlace(ICollection<Wifi> currentWifis, ICollection<Place> places)
         {
-            var ctx = DataManager.Instance.context;
             double maxScore = -1;
             Place mostSimilarPlace = noPlace;
-            double tempScore = 0;
-            foreach (Place place in ctx.Places.Local){
-                tempScore = computeScore(place, currentWifis);
-                if (tempScore > maxScore)
+            double tempScore = 0;           
+            foreach (Place place in places)
                 {
-                    maxScore = tempScore;
-                    mostSimilarPlace = place;
+                    //System.Threading.Thread.Sleep(20000);
+                    tempScore = computeScore(place, currentWifis);
+                    if (tempScore > maxScore)
+                    {
+                        maxScore = tempScore;
+                        mostSimilarPlace = place;
+                    }
                 }
-            }
             return mostSimilarPlace;
         }
     }

@@ -15,9 +15,7 @@ namespace WhereAmI
 {
     public class CurrentState : INotifyPropertyChanged
     {
-        private DateTime date;
         private Place _place;
-        private Place _old;
         //Property Definition
         public Place Place
         {
@@ -29,13 +27,7 @@ namespace WhereAmI
                 {
                     this._place = value;
                     NotifyPropertyChanged("Place");
-                    this.date = DateTime.Now;
                 }
-                var now = DateTime.Now;
-                TimeSpan diff = now.Subtract(this.date);
-                this.date = now;
-                this._place.Cnt += (int)diff.TotalSeconds;
-                DataManager.Instance.context.SaveChanges();
             }
         }
 
@@ -51,15 +43,18 @@ namespace WhereAmI
     public class DataManager
     {
         private static DataManager dmInstance;
-        
+
         //A list that notifies any destinations of changes to its content
         //It works only when an item is added or deleted
         //It reflects changes in the list data source
-        
-        //public ObservableCollection<Place> places;
+
+        public List<Wifi> mockWifis = new List<Wifi>();
         public ObservableCollection<Wifi> wifis;
+        //public ObservableCollection<Place> places;
+        //public ObservableCollection<models.Action> actions;
+
         public CurrentState currentState;
-        
+
         public AppContext context;
         public Algorithm algo;
 
@@ -67,23 +62,40 @@ namespace WhereAmI
         {
             wifis = new ObservableCollection<Wifi>();
             currentState = new CurrentState();
-            //loadData();
-            //loadDataDB();
             context = new AppContext();
             algo = new Algorithm();
-            // Load is an extension method on IQueryable,  
-            // defined in the System.Data.Entity namespace. 
-            // This method enumerates the results of the query,  
-            // similar to ToList but without creating a list. 
-            // When used with Linq to Entities this method  
-            // creates entity objects and adds them to the context.
+            //places = new ObservableCollection<Place>();
+            //actions = new ObservableCollection<models.Action>();
             context.Places.Load();
             context.Actions.Load();
+            foreach (Place p in context.Places.Local)
+                foreach (Wifi w in p.Wifis)
+                    mockWifis.Add(w);
+        }
+
+        public void doLoad()
+        {
+            /*
+            //do on Worker Thread
+            context.Places.Load();
+            context.Actions.Load();
+            App.Current.Dispatcher.Invoke((System.Action)delegate()
+            {
+                foreach (Place p in context.Places)
+                {
+                    this.places.Add(p);
+                }
+                foreach (models.Action a in context.Actions)
+                {
+                    this.actions.Add(a);
+                }
+            }, System.Windows.Threading.DispatcherPriority.Background);
+            */
         }
 
         private DataManager()
         {
-            
+
         }
 
         public static DataManager Instance
@@ -96,107 +108,138 @@ namespace WhereAmI
             }
         }
 
-        private void loadDataDB()
-        {
-
-            using (var ctx = new AppContext())
-            {
-
-                var action = new WhereAmI.models.Action { Name = "prova", Command = "run prova" };
-                ctx.Actions.Add(action);
-                ctx.SaveChanges();
-
-                var actions = ctx.Actions;
-                foreach (var a in actions)
-                {
-                    Console.WriteLine("Action: "+a.ToString());
-                }
-
-                //var place = new Place { Name = "home", Cnt = 0, Snapshot = "dlink:10, home:30" };
-                //ctx.Places.Add(place);
-                //ctx.SaveChanges();
-
-                var places = ctx.Places;
-                foreach (var p in places)
-                {
-                    Console.WriteLine("Place:" + p.ToString());
-                }
-            }
-                 
-            }
-       
-        private void loadData()
-        {
-            //Mock for snapshot 
-            List<Wifi> snapshot1 = new List<Wifi>();
-            snapshot1.Add(new Wifi() { SSID = "Home", PowerPerc = 100 });
-            snapshot1.Add(new Wifi() { SSID = "HomeDani", PowerPerc = 1 });
-            snapshot1.Add(new Wifi() { SSID = "dlink", PowerPerc = 10 });
-
-            List<Wifi> snapshot2 = new List<Wifi>();
-            snapshot2.Add(new Wifi() { SSID = "Polito", PowerPerc = 10 });
-            snapshot2.Add(new Wifi() { SSID = "Lab1", PowerPerc = 30 });
-            snapshot2.Add(new Wifi() { SSID = "Lab2", PowerPerc = 50 });
-
-            List<Wifi> snapshot3 = new List<Wifi>();
-            snapshot3.Add(new Wifi() { SSID = "CompanyHall", PowerPerc = 50 });
-            snapshot3.Add(new Wifi() { SSID = "CompanyRoom1", PowerPerc = 20 });
-            snapshot3.Add(new Wifi() { SSID = "CompanyLab", PowerPerc = 80 });
-
-            //Mock for places 
-            Place p1 = new Place("Home", snapshot1);
-            Place p2 = new Place("Polito", snapshot2);
-            Place p3 = new Place("Work", snapshot3);
-
-            //places.Add(p1);
-            //places.Add(p2);
-            //places.Add(p3);
-
-        }
-
         //Read the current wifis networks connections from the WLAN API
         //update the wifis list
-        public void loadWifis()
+        public List<Wifi> loadWifis()
         {
-            loadWifisMockVersion();
+            List<Wifi> currentWifis = null; ;
             try
             {
-                wlan.WlanDataManager.loadWifis();
+                //currentWifis = loadWifisMockVersion();
+                currentWifis = wlan.WlanDataManager.loadWifis();
+
+                //Problem: wifis is an observable collection created in the UI Thread, 
+                //so it can be modified only by UI Thread
+                App.Current.Dispatcher.BeginInvoke((System.Action)delegate
+                 {
+                     wifis.Clear();
+                     foreach (Wifi w in currentWifis)
+                         wifis.Add(w);
+                 });
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+
             }
+            return currentWifis;
         }
 
-        private void loadWifisMockVersion(){
-            wifis.Clear();
+        private List<Wifi> loadWifisMockVersion()
+        {
+            List<Wifi> currentWifis = new List<Wifi>();
             Random random = new Random();
-            int randomNumber = random.Next(0, 3);
+            int randomNumber = random.Next(0, mockWifis.Count / 4);
             for (var i = 0; i < randomNumber; i++)
             {
-                wifis.Add(new Wifi() { SSID = "AAAAAA", PowerPerc = random.Next(0, 100) });
-                wifis.Add(new Wifi() { SSID = "BBB", PowerPerc = random.Next(0, 100) });
-                wifis.Add(new Wifi() { SSID = "CCCCCCCCC", PowerPerc = random.Next(0, 100) });
+                currentWifis.Add(mockWifis.ElementAt(random.Next(0, mockWifis.Count)));
             }
+            return currentWifis;
         }
 
-        //Retrieve the current place from the list of recorded places
-        //using the triangulation algorithm 
-        //that receives in input the list of current detected wifis
-        private void computeCurrentPlace()
+        private DateTime oldDate;
+
+        private Object writeLock = new Object();
+        
+        public void doRefresh()
         {
-            Random random = new Random();
-            int randomNumber = random.Next(0, 3);
-            //currentState.Place = places.ElementAt(random.Next(0, places.Count));
-            //currentState.Place = context.Places.AsEnumerable<Place>().ElementAt<Place>(0);
-            currentState.Place = algo.computeCurrentPlace(wifis);
+            //Call all registered handlers
+            BackgroundWork.messageRefreshHandlers("Starting refresh...");
+
+            //Saved all input data in local variable
+            var currentWifis = loadWifis();
+            var currentPlaces = DataManager.Instance.context.Places.Local.ToList();
+            if (currentWifis == null)
+            {
+                BackgroundWork.messageRefreshHandlers("Error: no wifi detected!");
+                return;
+            }
+
+            if (currentPlaces == null)
+            {
+                BackgroundWork.messageRefreshHandlers("No places stored!");
+                return;
+            }
+            //Run algorithm with retrieved input data
+            Place newPlace = algo.computeCurrentPlace(currentWifis, currentPlaces);
+            BackgroundWork.messageRefreshHandlers("Place Found");
+
+            //Update time counter - safe?
+            //Also other write from UI events
+            lock (writeLock)
+            {   //it is necessary to compute time
+                //from last refesh, because it can be done manually
+                if (this.currentState.Place == null)
+                    this.oldDate = DateTime.Now;
+                DateTime now = DateTime.Now;
+                TimeSpan diff = now.Subtract(oldDate);
+                oldDate = now;
+                newPlace.Cnt += (int)diff.TotalSeconds;
+                //or simply
+                //newPlace.Cnt = newPlace.Cnt + BackgroundWork.refreshTime / 1000;
+                safeSave();
+            }
+
+            if (currentState.Place == null || newPlace.PlaceId != currentState.Place.PlaceId)
+            {
+                currentState.Place = newPlace;
+                var currentActions = currentState.Place.InActions.ToList();
+
+                //System.Threading.Thread.Sleep(5000);
+                foreach (models.Action a in currentActions)
+                {
+                    //System.Threading.Thread.Sleep(10000);
+                    string cmd = a.Command;
+                    System.Diagnostics.Process proc = new System.Diagnostics.Process();
+                    proc.StartInfo.FileName = "cmd.exe";
+                    proc.StartInfo.Arguments = cmd;
+                    proc.StartInfo.CreateNoWindow = true;
+                    proc.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                    proc.StartInfo.UseShellExecute = false;
+                    proc.StartInfo.RedirectStandardOutput = true;
+
+                    try
+                    {
+                        proc.Start();
+                    }
+                    catch
+                    {
+
+                    }
+                    Console.WriteLine();
+                }
+            }
+            BackgroundWork.messageRefreshHandlers("Done");
+
         }
 
-        public void refresh()
+        public void safeSave()
         {
-            loadWifis();
-            computeCurrentPlace();
+            lock (writeLock)
+            {
+                this.context.SaveChanges();
+            }
+            /* TODO write with thread
+             * 
+            System.Threading.ThreadPool.QueueUserWorkItem(
+            (o) => {
+                lock (writeLock)
+                {
+                    this.context.SaveChanges();
+                }
+            });
+             * 
+             */
         }
     }
 }

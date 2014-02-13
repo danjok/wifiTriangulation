@@ -17,10 +17,10 @@ namespace WhereAmI.wlan
             return Encoding.ASCII.GetString(ssid.SSID, 0, (int)ssid.SSIDLength);
         }
 
-        public static void loadWifis()
+        public static List<Wifi> loadWifis()
         {
             WlanClient client = new WlanClient();
-            DataManager.Instance.wifis.Clear();
+            List<Wifi> wifis = new List<Wifi>();
             foreach (WlanClient.WlanInterface wlanIface in client.Interfaces)
             {
                 // Lists all networks with WEP security
@@ -31,13 +31,10 @@ namespace WhereAmI.wlan
                     var name = network.profileName;
                     var s = network.ToString();
                     uint powerc = network.wlanSignalQuality;
-                    DataManager.Instance.wifis.Add(new Wifi() { SSID = ssid, PowerPerc = Convert.ToInt32(powerc) });
-                    //if ( network.dot11DefaultCipherAlgorithm == Wlan.Dot11CipherAlgorithm.WEP )
-                    //{
-                    //    Console.WriteLine( "Found WEP network with SSID {0}.", GetStringForSSID(network.dot11Ssid));
-                    //}
+                    wifis.Add(new Wifi() { SSID = ssid, PowerPerc = Convert.ToInt32(powerc) });   
                 }
             }
+            return wifis;
         }
     }
 }
