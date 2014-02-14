@@ -10,7 +10,7 @@ using WhereAmI.models;
 namespace WhereAmI
 {
     //create your custom DB initializer by inheriting one of the intializer
-    public class AppContextInitializer : CreateDatabaseIfNotExists<AppContext>
+    public class AppContextInitializer : DropCreateDatabaseIfModelChanges<AppContext>
     {
         protected override void Seed(AppContext context)
         {
@@ -32,13 +32,15 @@ namespace WhereAmI
             snapshot3.Add(new Wifi() { SSID = "CompanyLab", PowerPerc = 80 });
 
             //Actions
-            models.Action a1 = new models.Action() { ActionId = 1, Name = "Activate Audio", Command = "the string command 1 " };
-            models.Action a2 = new models.Action() { ActionId = 2, Name = "Increase Brightness", Command = "the string command 2" };
-            models.Action a3 = new models.Action() { ActionId = 3, Name = "Dummy command", Command = "the string command 3" };
-
+            models.Action a1 = new models.Action() { ActionId = 1, Type="cmd", Name = "Use DHCP", Command = "netsh interface ip set address name='Connessione rete wireless' source=dhcp" };
+            models.Action a2 = new models.Action() { ActionId = 2, Type="cmd", Name = "Turn on firewall", Command = "netsh advfirewall set currentprofile state on" };
+            models.Action a3 = new models.Action() { ActionId = 3, Type="cmd", Name = "Turn off firewall", Command = "netsh advfirewall set currentprofile state off" };
+            models.Action a4 = new models.Action() { ActionId = 1, Type="cmd", Name = "Use Static Address", Command = "netsh interface ip set address name='Connessione rete wireless' 192.168.1.1 255.255.255.0 192.168.0.1 1" };
+            
             context.Actions.Add(a1);
             context.Actions.Add(a2);
             context.Actions.Add(a3);
+            context.Actions.Add(a4);
 
             ObservableCollection<models.Action> actions1 = new ObservableCollection<models.Action>();
             actions1.Add(a1);

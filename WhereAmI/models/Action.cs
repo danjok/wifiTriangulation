@@ -11,7 +11,7 @@ namespace WhereAmI.models
         public long ActionId { get; set; }
         public string Name { get; set; }
         public string Command { get; set; }
-
+        public string Type { get; set; }
         public virtual ICollection<Place> Places { get; set;}
 
         public override string ToString()
