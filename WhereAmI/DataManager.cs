@@ -76,21 +76,21 @@ namespace WhereAmI
         public void doLoad()
         {
             /*
-            //do on Worker Thread
-            context.Places.Load();
-            context.Actions.Load();
-            App.Current.Dispatcher.Invoke((System.Action)delegate()
-            {
-                foreach (Place p in context.Places)
-                {
-                    this.places.Add(p);
-                }
-                foreach (models.Action a in context.Actions)
-                {
-                    this.actions.Add(a);
-                }
-            }, System.Windows.Threading.DispatcherPriority.Background);
-            */
+           //do on Worker Thread
+           context.Places.Load();
+           context.Actions.Load();
+           App.Current.Dispatcher.Invoke((System.Action)delegate()
+           {
+               foreach (Place p in context.Places)
+               {
+                   this.places.Add(p);
+               }
+               foreach (models.Action a in context.Actions)
+               {
+                   this.actions.Add(a);
+               }
+           }, System.Windows.Threading.DispatcherPriority.Background);
+           */
         }
 
         private DataManager()
@@ -184,7 +184,7 @@ namespace WhereAmI
                 DateTime now = DateTime.Now;
                 TimeSpan diff = now.Subtract(oldDate);
                 oldDate = now;
-                newPlace.Cnt += (int)diff.TotalSeconds;
+                newPlace.Cnt += (ulong)diff.TotalMilliseconds;
                 //or simply
                 //newPlace.Cnt = newPlace.Cnt + BackgroundWork.refreshTime / 1000;
                 safeSave();
@@ -199,24 +199,7 @@ namespace WhereAmI
                 foreach (models.Action a in currentActions)
                 {
                     //System.Threading.Thread.Sleep(10000);
-                    string cmd = a.Command;
-                    System.Diagnostics.Process proc = new System.Diagnostics.Process();
-                    proc.StartInfo.FileName = "cmd.exe";
-                    proc.StartInfo.Arguments = cmd;
-                    proc.StartInfo.CreateNoWindow = true;
-                    proc.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                    proc.StartInfo.UseShellExecute = false;
-                    proc.StartInfo.RedirectStandardOutput = true;
-
-                    try
-                    {
-                        proc.Start();
-                    }
-                    catch
-                    {
-
-                    }
-                    Console.WriteLine();
+                    ActionManager.execute(a);
                 }
             }
             BackgroundWork.messageRefreshHandlers("Done");
