@@ -4,30 +4,45 @@
              xmlns:validators="clr-namespace:WhereAmI.views.validators"
              Loaded="OnControlLoaded">
     <Grid>
-        <DataGrid Name="actionsViewData" AutoGenerateColumns="False" CanUserAddRows="True" CellEditEnding="editEnd" SelectionMode="Single">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Add App" Click="AddApp_Click"/>
+            <Button Content="Add Command" Click="AddCommand_Click"/>
+            <Button Content="Set Image" Click="AddSetWallpaper_Click"/>
+        </StackPanel>
+        <Grid  Grid.Row="1">
+        <DataGrid IsReadOnly="True" Name="actionsViewData" AutoGenerateColumns="False" CanUserAddRows="False" CellEditEnding="editEnd" SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name">
-                    <DataGridTextColumn.Binding>
-                        <Binding Path="Name" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
-                        <Binding.ValidationRules>
-                            <validators:StringRangeValidationRule 
+                    <DataGridTextColumn Header="Name">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="Name" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                                <Binding.ValidationRules>
+                                    <validators:StringRangeValidationRule 
                             MinimumLength="1"
                             MaximumLength="20"/>
-                            <validators:ActionNameValidationRule/>
-                        </Binding.ValidationRules>
-                    </Binding>
+                                    <validators:ActionNameValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Detail" Width="*">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="Command" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                                <Binding.ValidationRules>
+                                    <validators:StringRangeValidationRule 
+                            MinimumLength="1"
+                            MaximumLength="2000"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                <DataGridTextColumn Header="Type" IsReadOnly="True">
+                    <DataGridTextColumn.Binding>
+                            <Binding Path="Type"/>
                     </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="Command" Width="*">
-                    <DataGridTextColumn.Binding>
-                        <Binding Path="Command" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
-                        <Binding.ValidationRules>
-                            <validators:StringRangeValidationRule 
-                            MinimumLength="1"
-                            MaximumLength="20"/>
-                        </Binding.ValidationRules>
-                    </Binding>
-                </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
                 <DataGridTemplateColumn Header="" IsReadOnly="True" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
@@ -38,5 +53,6 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+    </Grid>
     </Grid>
 </UserControl>

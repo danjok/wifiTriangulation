@@ -54,7 +54,7 @@ namespace WhereAmI.views
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Warning);
 
-            if (result == MessageBoxResult.Yes)
+            if (result == MessageBoxResult.Yes && actionsViewData.SelectedItem !=null)
             {
                 var ctx = DataManager.Instance.context;
                 ctx.Actions.Remove(actionsViewData.SelectedItem as models.Action);
@@ -62,5 +62,82 @@ namespace WhereAmI.views
             }
         }
 
+        private void AddCommand_Click(object sender, RoutedEventArgs e)
+        {
+            models.Action a = new models.Action(){Type = "cmd"};
+
+            AddCommandDialogBox dlg = new AddCommandDialogBox();
+            // Instantiate the dialog box
+            // Configure the dialog box
+            dlg.Owner = Window.GetWindow(this) as MainWindow; ;
+            dlg.DataContext = a;
+
+            // Open the dialog box modally 
+            dlg.ShowDialog();
+
+            //var ctx = DataManager.Instance.context;
+            if (dlg.DialogResult == true)
+            {   
+                var ctx = DataManager.Instance.context;
+                ctx.Actions.Add(a);
+                DataManager.Instance.safeSave();
+            } 
+        }
+
+
+        private void AddApp_Click(object sender, RoutedEventArgs e)
+        {
+            // Configure open file dialog box
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.FileName = ""; // Default file name
+            dlg.DefaultExt = ".exe"; // Default file extension
+            dlg.Filter = "Exe Files (.exe)|*.exe|Script Files (.bat)|*.bat "; // Filter files by extension 
+
+            // Show open file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process open file dialog box results 
+            if (result == true)
+            {
+                // Open document 
+                string filename = dlg.FileName;
+                models.Action a = new models.Action() {
+                    Type="app",
+                    Name= System.IO.Path.GetFileNameWithoutExtension(filename),
+                    Command=filename            
+                };
+                var ctx = DataManager.Instance.context;
+                ctx.Actions.Add(a);
+                DataManager.Instance.safeSave();
+            }
+        }
+
+        private void AddSetWallpaper_Click(object sender, RoutedEventArgs e)
+        {
+            // Configure open file dialog box
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.FileName = ""; // Default file name
+            dlg.DefaultExt = ".bmp"; // Default file extension
+            dlg.Filter = "Image Files (*.bmp, *.jpg, *.jpeg, *.jpe, *.png) | *.bmp; *.jpg; *.jpeg; *.jpe; *.png"; // Filter files by extension 
+
+            // Show open file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process open file dialog box results 
+            if (result == true)
+            {
+                // Open document 
+                string filename = dlg.FileName;
+                models.Action a = new models.Action()
+                {
+                    Type = "wallpaper",
+                    Name = System.IO.Path.GetFileNameWithoutExtension(filename),
+                    Command = filename
+                };
+                var ctx = DataManager.Instance.context;
+                ctx.Actions.Add(a);
+                DataManager.Instance.safeSave();
+            }
+        }
     }
 }
