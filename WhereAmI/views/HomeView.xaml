@@ -1,8 +1,10 @@
-﻿<UserControl x:Class="WhereAmI.views.HomeView"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:p="clr-namespace:WhereAmI.Properties"
+             xmlns:Custom="http://schemas.pavel.fedarovich.com/winfx/2010/xaml/presentation" x:Class="WhereAmI.views.HomeView"
              Loaded="OnControlLoaded">
-             <!--xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    <!--xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"-->
@@ -15,16 +17,16 @@
                         Auto means the space necessary
                     -->
         <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
+            <RowDefinition Height="80" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <!-- TODO Binding-->
-        <TextBlock Grid.Row="0" x:Name="vState" Text="{Binding Place.Name}"  HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="50"></TextBlock>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,3,0,3">
-            <Button Name="btnAddPlace" Click="btnAddPlace_Click"  Width="103" FontSize="15" Margin="10,0,0,0" HorizontalAlignment="Left">Add place</Button>
-            <Button Name="btnRefres" Click="btnRefresh_Click"  Width="103" FontSize="15" Margin="10,0,0,0" HorizontalAlignment="Left">Refresh</Button>
+        <TextBlock Grid.Row="0" x:Name="vState" Text="{Binding Place.Name, FallbackValue=Loading..., TargetNullValue=Loading...}"  HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="50"/>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Margin="10">
+            <Button ToolTip="{x:Static p:Resources.ToolTip_AddPlace}" x:Name="btnAddPlace" Click="btnAddPlace_Click"  Width="103" FontSize="15" Margin="10,0,0,0" HorizontalAlignment="Left" IsEnabled="False" Content="Add place"/>
+            <Button ToolTip="{x:Static p:Resources.ToolTip_Refresh}" x:Name="btnRefresh" Click="btnRefresh_Click"  Width="103" FontSize="15" Margin="10,0,0,0" HorizontalAlignment="Left" IsEnabled="False" Content="Refresh"/>
         </StackPanel>
         <Label Grid.Row="2" FontSize="15" Content="Current Wireless Network Connections" HorizontalAlignment="Center"></Label>
         <Grid Grid.Row="3">
@@ -54,6 +56,6 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-        </Grid>
+        </Grid>  
     </Grid>
 </UserControl>
