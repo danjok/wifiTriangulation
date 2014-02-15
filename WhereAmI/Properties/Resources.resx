@@ -144,4 +144,37 @@
   <data name="ResetCntPlaceTitle" xml:space="preserve">
     <value>Reset Statistics</value>
   </data>
+  <data name="ToolTip_AddApp" xml:space="preserve">
+    <value>Finds an application and adds it in my actions</value>
+  </data>
+  <data name="ToolTip_AddCommand" xml:space="preserve">
+    <value>Ask for a command and adds it in my actions</value>
+  </data>
+  <data name="ToolTip_AddImage" xml:space="preserve">
+    <value>Finds an image to set as wallpaper and adds it in my actions</value>
+  </data>
+  <data name="ToolTip_AddPlace" xml:space="preserve">
+    <value>Saves this place in my places</value>
+  </data>
+  <data name="ToolTip_DeleteAction" xml:space="preserve">
+    <value>Deletes this action</value>
+  </data>
+  <data name="ToolTip_DeletePlace" xml:space="preserve">
+    <value>Deletes this place</value>
+  </data>
+  <data name="ToolTip_EditPlace" xml:space="preserve">
+    <value>Edits parameters for this place</value>
+  </data>
+  <data name="ToolTip_Refresh" xml:space="preserve">
+    <value>Localizes this place between my places</value>
+  </data>
+  <data name="ToolTip_Reset" xml:space="preserve">
+    <value>Resets time counter for this place</value>
+  </data>
+  <data name="UpdateWifiMsg" xml:space="preserve">
+    <value>Do you want to update the saved snapshot with the current one?</value>
+  </data>
+  <data name="UpdateWifiTitle" xml:space="preserve">
+    <value>Update Wifi Snapshot</value>
+  </data>
 </root>

@@ -4,7 +4,7 @@
         xmlns:tabData="clr-namespace:WhereAmI.views"
         Title="WhereAmI" 
         Height="550" 
-        Width="525"
+        Width="650"
         MinHeight="250"
         MinWidth="225"
         Loaded="OnLoaded">

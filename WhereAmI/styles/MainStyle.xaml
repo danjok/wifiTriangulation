@@ -37,7 +37,7 @@
     </Style>-->
 
     <Style TargetType="{x:Type DataGrid}">
-        <Setter Property="RowHeight" Value="25" />
+        <Setter Property="RowHeight" Value="35" />
         <Setter Property="FontSize" Value="15" />
     </Style> 
     
