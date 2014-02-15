@@ -26,6 +26,12 @@ namespace WhereAmI.views
 
         void okButton_Click(object sender, RoutedEventArgs e)
         {
+            //To manually trigger update if no property has changed
+            BindingExpression be = this.ActionNameTextBox.GetBindingExpression(TextBox.TextProperty);
+            be.UpdateSource();
+            be = this.CommandTextBox.GetBindingExpression(TextBox.TextProperty);
+            be.UpdateSource();
+            
             // Don't accept the dialog box if there is invalid data
             if (!IsValid(this)) return;
             // Dialog box accepted
