@@ -24,7 +24,7 @@ namespace WhereAmI.views
     /// </summary>
     public partial class PlacesView : UserControl
     {
-        Place selectedPlace;        
+        Place selectedPlace;
         public PlacesView()
         {
             InitializeComponent();
@@ -51,7 +51,7 @@ namespace WhereAmI.views
             EditDialogBox dlg = new EditDialogBox();
 
             // Configure the dialog box
-            dlg.Owner = Window.GetWindow(this) as MainWindow;;
+            dlg.Owner = Window.GetWindow(this) as MainWindow;
             dlg.DataContext = selectedPlace;
 
             // Open the dialog box modally 
@@ -64,6 +64,23 @@ namespace WhereAmI.views
             }
             DataManager.Instance.safeSave();
         }
+
+        private void btnUpdateWifis_Click(object sender, RoutedEventArgs e)
+        {
+            // Display message box
+            MessageBoxResult result = MessageBox.Show(
+                Properties.Resources.UpdateWifiMsg,
+                Properties.Resources.UpdateWifiTitle,
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                selectedPlace.Snapshot = Place.serializationSnapshot(DataManager.Instance.wifis.ToList());
+                DataManager.Instance.safeSave();
+            }
+        }
+
 
         private void btnDeletePlace_Click(object sender, RoutedEventArgs e)
         {
@@ -82,7 +99,7 @@ namespace WhereAmI.views
                 DataManager.Instance.safeSave();
 
                 //To hide UI buttons
-                placeViewDetail.Visibility = System.Windows.Visibility.Hidden;           
+                placeViewDetail.Visibility = System.Windows.Visibility.Hidden;
             }
         }
 

@@ -2,7 +2,9 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:root="clr-namespace:WhereAmI"
-             xmlns:local="clr-namespace:WhereAmI.views" x:Class="WhereAmI.views.PlacesView"
+             xmlns:local="clr-namespace:WhereAmI.views" 
+             x:Class="WhereAmI.views.PlacesView"
+             xmlns:p="clr-namespace:WhereAmI.Properties"
              Loaded="OnControlLoaded">
     <UserControl.Resources>
         <root:TimeConverter x:Key="converter"/>
@@ -44,6 +46,7 @@
             <StackPanel Grid.Row="2" HorizontalAlignment="Left" Orientation="Horizontal" >
                 <!-- binding of eventhandlers to controls-->
                 <Button x:Name="btnChangePlace" Click="btnChangePlace_Click" Content="Edit"/>
+                <Button x:Name="btnUpdateWifis" Click="btnUpdateWifis_Click" Content="Refresh"/>
                 <Button x:Name="btnDeletePlace" Click="btnDeletePlace_Click" Content="Delete"/>
                 <Button x:Name="btnResetStatPlace" Click="btnResetStatPlace_Click" Content="Reset"/>
             </StackPanel>
@@ -72,7 +75,7 @@
             </ScrollViewer>
             <GridSplitter Grid.Row="5" Height="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" ShowsPreview="True" Background="Silver"/>
             <local:ListBoxActions x:Name="listActions" Grid.Row="6">
-            </local:ListBoxActions> 
+            </local:ListBoxActions>
         </Grid>
     </Grid>
 </UserControl>
