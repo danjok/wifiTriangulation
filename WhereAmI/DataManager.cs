@@ -64,33 +64,16 @@ namespace WhereAmI
             currentState = new CurrentState();
             context = new AppContext();
             algo = new Algorithm();
-            //places = new ObservableCollection<Place>();
-            //actions = new ObservableCollection<models.Action>();
+        }
+
+        public void doLoad()
+        {
+            //do on Worker Thread
             context.Places.Load();
             context.Actions.Load();
             foreach (Place p in context.Places.Local)
                 foreach (Wifi w in p.Wifis)
                     mockWifis.Add(w);
-        }
-
-        public void doLoad()
-        {
-            /*
-           //do on Worker Thread
-           context.Places.Load();
-           context.Actions.Load();
-           App.Current.Dispatcher.Invoke((System.Action)delegate()
-           {
-               foreach (Place p in context.Places)
-               {
-                   this.places.Add(p);
-               }
-               foreach (models.Action a in context.Actions)
-               {
-                   this.actions.Add(a);
-               }
-           }, System.Windows.Threading.DispatcherPriority.Background);
-           */
         }
 
         private DataManager()
@@ -150,7 +133,7 @@ namespace WhereAmI
         private DateTime oldDate;
 
         private Object writeLock = new Object();
-        
+
         public void doRefresh()
         {
             //Call all registered handlers

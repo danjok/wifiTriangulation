@@ -28,11 +28,13 @@ namespace WhereAmI.views
         public PlacesView()
         {
             InitializeComponent();
-            //Data binding at creation
-            // After the data is loaded call the DbSet<T>.Local property  
-            // to use the DbSet<T> as a binding source. 
-            var ctx = DataManager.Instance.context;
-            placesViewData.ItemsSource = ctx.Places.Local;
+            //Data binding after loading data
+            App.loadedDataHandlers += (delegate()
+            {
+                // After the data is loaded call the DbSet<T>.Local property  
+                // to use the DbSet<T> as a binding source. 
+                placesViewData.ItemsSource = DataManager.Instance.context.Places.Local;
+            });
         }
 
         private void OnControlLoaded(object sender, RoutedEventArgs e)

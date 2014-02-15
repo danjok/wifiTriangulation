@@ -25,14 +25,21 @@ namespace WhereAmI.views
         public ActionsView()
         {
             InitializeComponent();
-            //Data binding at creation
-            var ctx = DataManager.Instance.context;
-            // After the data is loaded call the DbSet<T>.Local property  
-            // to use the DbSet<T> as a binding source. 
-            actionsViewData.ItemsSource = ctx.Actions.Local;
-            
+            //Data binding after loading data
+            App.loadedDataHandlers += (delegate()
+            {
+                // After the data is loaded call the DbSet<T>.Local property  
+                // to use the DbSet<T> as a binding source. 
+                actionsViewData.ItemsSource = DataManager.Instance.context.Actions.Local;
+                buttonApp.IsEnabled = true;
+                buttonCommand.IsEnabled = true;
+                buttonImage.IsEnabled = true;
+            });
+
+            //Save change after having changed only a cell, if datagrid is not readOnly
             actionsViewData.CommitEdit(DataGridEditingUnit.Cell, true);
-            }
+            actionsViewData.SelectionChanged += actionsViewData_Selected;    
+        }
 
         private void OnControlLoaded(object sender, RoutedEventArgs e)
         {

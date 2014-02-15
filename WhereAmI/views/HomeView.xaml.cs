@@ -25,9 +25,13 @@ namespace WhereAmI.views
         public HomeView()
         {
             InitializeComponent();
-            //Data binding at creation
             wifiData.ItemsSource = DataManager.Instance.wifis;
             vState.DataContext = DataManager.Instance.currentState;
+            App.loadedDataHandlers += (delegate()
+            {
+                btnAddPlace.IsEnabled = true;
+                btnRefresh.IsEnabled = true;
+            });
         }
 
         private void OnControlLoaded(object sender, RoutedEventArgs e)

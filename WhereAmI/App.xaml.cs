@@ -21,23 +21,22 @@ namespace WhereAmI
         private BackgroundWorker loadingWorker;
         private Thread refreshThread;
         
+        public delegate void onLoadedData();
+        static public onLoadedData loadedDataHandlers;
+
         void AppStartup(object sender, StartupEventArgs e)
         {
             DataManager.Instance.init();
+            /**
+            * Main Window
+            */
+            mw = new MainWindow();
+            mw.Show();
+            
             ThreadStart ts = new ThreadStart(BackgroundWork.Execute);
             refreshThread = new Thread(ts);
             refreshThread.IsBackground = true;
-
-            /**
-             * Main Window
-             */
-            mw = new MainWindow();
-            mw.Show();
-            refreshThread.Start();
             
-            return;
-            
-            //TODO
             /**
              * Loading worker
              */
@@ -56,6 +55,7 @@ namespace WhereAmI
                 //UI thread
                 mw.Status.Text = "Loading completed successfully!";
                 refreshThread.Start();
+                loadedDataHandlers();
             };
             loadingWorker.RunWorkerAsync();
 

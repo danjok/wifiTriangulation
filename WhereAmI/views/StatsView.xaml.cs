@@ -22,13 +22,23 @@ namespace WhereAmI.views
     /// </summary>
     public partial class StatsView : UserControl
     {
+        private bool isLoadedData = false;
         public StatsView()
         {
             InitializeComponent();
-            
+            App.loadedDataHandlers += (delegate()
+            {
+                isLoadedData = true;
+            });
         }
 
         private void OnControlLoaded(object sender, RoutedEventArgs e)
+        {
+            if (isLoadedData)
+                computeStats();
+        }
+
+        private void computeStats()
         {
             List<KeyValuePair<string, int>> items = new List<KeyValuePair<string, int>>();
 
