@@ -38,12 +38,16 @@ namespace WhereAmI.views
 
             //Save change after having changed only a cell, if datagrid is not readOnly
             actionsViewData.CommitEdit(DataGridEditingUnit.Cell, true);
-            actionsViewData.SelectionChanged += actionsViewData_Selected;    
+            actionsViewData.SelectionChanged += actionsViewData_Selected;
         }
 
         private void OnControlLoaded(object sender, RoutedEventArgs e)
         {
-            //placesViewData.ItemsSource = DataManager.Instance.places;
+            buttonDelete.IsEnabled = false;
+        }
+        private void actionsViewData_Selected(object sender, RoutedEventArgs e)
+        {
+            buttonDelete.IsEnabled = true;
         }
 
         private void editEnd(object sender, DataGridCellEditEndingEventArgs e)
@@ -66,6 +70,7 @@ namespace WhereAmI.views
                 var ctx = DataManager.Instance.context;
                 ctx.Actions.Remove(actionsViewData.SelectedItem as models.Action);
                 DataManager.Instance.safeSave();
+                buttonDelete.IsEnabled = false;
             }
         }
 
@@ -84,11 +89,11 @@ namespace WhereAmI.views
 
             //var ctx = DataManager.Instance.context;
             if (dlg.DialogResult == true)
-            {   
+            {
                 var ctx = DataManager.Instance.context;
                 ctx.Actions.Add(a);
                 DataManager.Instance.safeSave();
-            } 
+            }
         }
 
 
@@ -111,7 +116,7 @@ namespace WhereAmI.views
                 models.Action a = new models.Action() {
                     Type="app",
                     Name= System.IO.Path.GetFileNameWithoutExtension(filename),
-                    Command=filename            
+                    Command=filename
                 };
                 var ctx = DataManager.Instance.context;
                 ctx.Actions.Add(a);

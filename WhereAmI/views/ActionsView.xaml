@@ -2,20 +2,29 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:validators="clr-namespace:WhereAmI.views.validators"
+             xmlns:p="clr-namespace:WhereAmI.Properties"
              Loaded="OnControlLoaded">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Add App" Click="AddApp_Click"/>
-            <Button Content="Add Command" Click="AddCommand_Click"/>
-            <Button Content="Set Image" Click="AddSetWallpaper_Click"/>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,10,10,0">
+            <Button  ToolTip="{x:Static p:Resources.ToolTip_AddApp}" x:Name="buttonApp" Content="Add App" Click="AddApp_Click" IsEnabled="False"/>
+            <Button  ToolTip="{x:Static p:Resources.ToolTip_AddCommand}" x:Name="buttonCommand" Content="Add Command" Click="AddCommand_Click" IsEnabled="False"/>
+            <Button  ToolTip="{x:Static p:Resources.ToolTip_AddImage}" x:Name="buttonImage" Content="Add Image" Click="AddSetWallpaper_Click" IsEnabled="False"/>
+            <Button  ToolTip="{x:Static p:Resources.ToolTip_DeleteAction}" x:Name="buttonDelete"  Content="Delete" Click="btnDeleteAction_Click"/>
         </StackPanel>
-        <Grid  Grid.Row="1">
-        <DataGrid IsReadOnly="True" Name="actionsViewData" AutoGenerateColumns="False" CanUserAddRows="False" CellEditEnding="editEnd" SelectionMode="Single">
-            <DataGrid.Columns>
+        <Grid  Grid.Row="1" Margin="10">
+            <DataGrid IsReadOnly="False" 
+                  Name="actionsViewData" 
+                  AutoGenerateColumns="False" 
+                  CanUserAddRows="False" 
+                  CellEditEnding="editEnd" 
+                  SelectionMode="Single"
+                 >
+                <DataGrid.Columns>
                     <DataGridTextColumn Header="Name">
                         <DataGridTextColumn.Binding>
                             <Binding Path="Name" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
@@ -26,6 +35,11 @@
                                     <validators:ActionNameValidationRule/>
                                 </Binding.ValidationRules>
                             </Binding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Type" IsReadOnly="True">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="Type"/>
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="Detail" Width="*">
@@ -39,20 +53,8 @@
                             </Binding>
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
-                <DataGridTextColumn Header="Type" IsReadOnly="True">
-                    <DataGridTextColumn.Binding>
-                            <Binding Path="Type"/>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
-                <DataGridTemplateColumn Header="" IsReadOnly="True" Width="Auto">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Content="Delete" Click="btnDeleteAction_Click"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-    </Grid>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
     </Grid>
 </UserControl>
