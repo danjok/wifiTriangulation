@@ -7,7 +7,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-    <Label Grid.Row="0" Content="Actions" FontSize="15" FontWeight="Bold"/>
+    <Label Grid.Row="0" HorizontalAlignment="Center" Content="Actions" FontSize="15" FontWeight="Bold"/>
         <Grid Grid.Row="1">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -20,11 +20,13 @@
         <TextBlock Grid.Row="0"
 					Grid.Column="0"
 					Text="Configured"                 
-					FontSize="15"/>
+					FontSize="15"
+                    HorizontalAlignment="Center"/>
         <TextBlock Grid.Row="0"
 					Grid.Column="1"
 					Text="Available" 
-					FontSize="15"/>
+					FontSize="15"
+                    HorizontalAlignment="Center"/>
         <ListBox Grid.Row="1"
 					Grid.Column="0"
 					x:Name="lbActions" 

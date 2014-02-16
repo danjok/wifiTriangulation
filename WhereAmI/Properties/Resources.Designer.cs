@@ -223,6 +223,15 @@ namespace WhereAmI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Runs selected action.
+        /// </summary>
+        public static string ToolTip_RunAction {
+            get {
+                return ResourceManager.GetString("ToolTip_RunAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want to update the saved snapshot with the current one?.
         /// </summary>
         public static string UpdateWifiMsg {

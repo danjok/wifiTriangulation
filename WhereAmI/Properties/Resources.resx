@@ -171,6 +171,9 @@
   <data name="ToolTip_Reset" xml:space="preserve">
     <value>Resets time counter for this place</value>
   </data>
+  <data name="ToolTip_RunAction" xml:space="preserve">
+    <value>Runs selected action</value>
+  </data>
   <data name="UpdateWifiMsg" xml:space="preserve">
     <value>Do you want to update the saved snapshot with the current one?</value>
   </data>
