@@ -68,12 +68,27 @@ namespace WhereAmI
 
         public void doLoad()
         {
-            //do on Worker Thread
-            context.Places.Load();
-            context.Actions.Load();
-            foreach (Place p in context.Places.Local)
-                foreach (Wifi w in p.Wifis)
-                    mockWifis.Add(w);
+            bool loaded=false;
+            while (!loaded)
+            {
+                try
+                {
+                    //do on Worker Thread
+                    context.Places.Load();
+                    context.Actions.Load();
+                    //Only for tests
+                    foreach (Place p in context.Places.Local)
+                        foreach (Wifi w in p.Wifis)
+                            mockWifis.Add(w);
+                    loaded = true;
+                }
+                catch (Exception e)
+                {
+                    loaded = false;
+                    System.Windows.MessageBox.Show(e.Message, "Error Loading");
+                    context = new AppContext();
+                }
+            }
         }
 
         private DataManager()
@@ -193,7 +208,15 @@ namespace WhereAmI
         {
             lock (writeLock)
             {
-                this.context.SaveChanges();
+                try { 
+                    this.context.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    BackgroundWork.messageRefreshHandlers(e.Message);
+                    System.Windows.MessageBox.Show(e.Message, "Error Loading");
+                }
+                
             }
             /* TODO write with thread
              * 

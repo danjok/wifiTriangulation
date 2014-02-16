@@ -16,7 +16,8 @@ namespace WhereAmI
     {
         static public void execute(models.Action a)
         {
-            switch(a.Type){
+            try{
+                switch(a.Type){
                 case "cmd":
                     startProcessCmdLine(a.Command);
                     break;
@@ -26,6 +27,9 @@ namespace WhereAmI
                 case "wallpaper":
                     changeWallpaper(a.Command);
                     break;
+                }
+            }catch(Exception e){
+                System.Windows.MessageBox.Show(e.Message,"Error action: "+a.Name);
             }
         }
 
@@ -47,16 +51,8 @@ namespace WhereAmI
             proc.StartInfo.RedirectStandardOutput = true;
             if (cmd.Contains("netsh"))
                 proc.StartInfo.Verb = "runas";
-            try
-            {
-                proc.Start();
-            }
-            catch (Exception ex)
-            {
-                //System.Windows.MessageBox.Show(ex.ToString(), "Run As", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            proc.Start();
             string output = proc.StandardOutput.ReadToEnd();
-
         }
 
        [DllImport("user32.dll", CharSet = CharSet.Auto)]
@@ -66,7 +62,7 @@ namespace WhereAmI
 
             if (File.Exists(file) == false)
             {
-                return;
+                throw new FileNotFoundException();
             }
 
             RegistryKey rkWallPaper = Registry.CurrentUser.OpenSubKey("Control Panel\\Desktop", true);
