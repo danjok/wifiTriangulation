@@ -33,7 +33,7 @@ namespace WhereAmI.views
             {
                 // After the data is loaded call the DbSet<T>.Local property  
                 // to use the DbSet<T> as a binding source. 
-                placesViewData.ItemsSource = DataManager.Instance.context.Places.Local;
+                placesViewData.ItemsSource = placesViewData.ItemsSource = DataManager.Instance.context.Places.Local;
             });
         }
 
@@ -80,7 +80,6 @@ namespace WhereAmI.views
                 DataManager.Instance.safeSave();
             }
         }
-
 
         private void btnDeletePlace_Click(object sender, RoutedEventArgs e)
         {

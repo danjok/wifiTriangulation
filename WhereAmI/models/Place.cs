@@ -77,6 +77,7 @@ namespace WhereAmI.models
             } set{
                 this._snapshot = value;
                 Wifis = Place.deserializationSnapshot(value);
+                this.NotifyPropertyChanged("Wifis");
             }
         }
 
