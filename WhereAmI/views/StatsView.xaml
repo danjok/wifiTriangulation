@@ -5,7 +5,14 @@
         Loaded="OnControlLoaded"
         >
     <Grid>
-        <DVC:Chart Canvas.Top="0" Canvas.Left="0" Name="mcChart"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="10" HorizontalAlignment="Right" Grid.Row="0">
+            <Button x:Name="btnResetStats" Click="btnResetStats_Click" Content="Reset all" IsEnabled="False"/>
+        </StackPanel>
+        <DVC:Chart Grid.Row="1" Canvas.Top="0" Canvas.Left="0" Name="mcChart"
            Background="#00B0C4DE" 
            BorderThickness="0" 
            LegendTitle="Places">

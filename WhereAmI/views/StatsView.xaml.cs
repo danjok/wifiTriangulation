@@ -29,6 +29,7 @@ namespace WhereAmI.views
             App.loadedDataHandlers += (delegate()
             {
                 isLoadedData = true;
+                btnResetStats.IsEnabled = true;
             });
         }
 
@@ -48,6 +49,14 @@ namespace WhereAmI.views
                 items.Add(new KeyValuePair<string, int>(p.Name, (int)p.Cnt));
             }
             ((PieSeries)mcChart.Series[0]).ItemsSource = items.ToArray();
+        }
+
+        private void btnResetStats_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (Place p in DataManager.Instance.context.Places.Local)
+                p.Cnt = 0;
+            DataManager.Instance.safeSave();
+            this.RaiseEvent(new RoutedEventArgs(UserControl.LoadedEvent));
         }
     }
 }
