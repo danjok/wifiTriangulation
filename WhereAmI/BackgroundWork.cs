@@ -10,7 +10,13 @@ namespace WhereAmI
 {
     class BackgroundWork
     {
-        public static int refreshTime = 10000;
+        public static int[] refreshTimes = {1*1000,
+                                           10*1000,
+                                           30*1000, 
+                                           60*1000, 
+                                           3*60*1000, 
+                                           Timeout.Infinite};
+        public static int iRT = 0;
 
         public delegate void onMessageRefresh(string msg);
         public delegate void onWifiChanged(List<Wifi> w);
@@ -26,7 +32,7 @@ namespace WhereAmI
             {
                 DataManager.Instance.doRefresh();
                 //Thread.Sleep(refreshTime);
-                eventX.WaitOne(refreshTime);
+                eventX.WaitOne(refreshTimes[iRT]);
             }
         }
 

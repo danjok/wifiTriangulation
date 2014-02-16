@@ -20,6 +20,9 @@
             <RowDefinition Height="80" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <!-- TODO Binding-->
@@ -28,15 +31,35 @@
             <Button ToolTip="{x:Static p:Resources.ToolTip_AddPlace}" x:Name="btnAddPlace" Click="btnAddPlace_Click"  Width="103" FontSize="15" Margin="10,0,0,0" HorizontalAlignment="Left" IsEnabled="False" Content="Add place"/>
             <Button ToolTip="{x:Static p:Resources.ToolTip_Refresh}" x:Name="btnRefresh" Click="btnRefresh_Click"  Width="103" FontSize="15" Margin="10,0,0,0" HorizontalAlignment="Left" IsEnabled="False" Content="Refresh"/>
         </StackPanel>
-        <Label Grid.Row="2" FontSize="15" Content="Current Wireless Network Connections" HorizontalAlignment="Center"></Label>
-        <Grid Grid.Row="3">
+        <Label Grid.Row="2" FontSize="15" Content="Refresh period" HorizontalAlignment="Center"></Label>
+        <Slider Name="refreshCntrl" Grid.Row="3" Width="300" Value="0" HorizontalAlignment="Center" Orientation="Horizontal" 
+                IsSnapToTickEnabled="True" Maximum="5" TickPlacement="BottomRight" 
+                ValueChanged="Slider_ValueChanged" IsEnabled="False"></Slider>
+        <Grid Grid.Row="4" Width="340">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0">Always</Label>
+            <Label Grid.Column="1" Margin="19,0,10,0">10s</Label>
+            <Label Grid.Column="2" Margin="19,0,10,0">30s</Label>
+            <Label Grid.Column="3" Margin="21,0,0,0">1m</Label>
+            <Label Grid.Column="4" Margin="23,0,0,0">3m</Label>
+            <Label Grid.Column="5" Margin="20,0,0,0">Stop</Label>
+        </Grid>
+        <Label Grid.Row="5" Margin="0,10,0,0" FontSize="15" FontWeight="Bold" Content="Wireless Network Connections" HorizontalAlignment="Center"></Label>
+        <Grid Grid.Row="6">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <!-- ScrollViewer doesn't work if it is encapsulated in a StackPanel-->
-            <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+            <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto"  HorizontalScrollBarVisibility="Auto" CanContentScroll="True">
                 <!-- ItemsControl: to have a list of element not selectable -->
                 <ItemsControl  Name="wifiData" Margin="10">
                     <ItemsControl.ItemTemplate>
@@ -44,7 +67,7 @@
                         <DataTemplate>
                             <Grid Margin="0,10,0,0">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="200" />
                                     <ColumnDefinition Width="200" />
                                 </Grid.ColumnDefinitions>
                                 <!-- Bind view element to a model property -->

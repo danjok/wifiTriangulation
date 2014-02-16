@@ -31,6 +31,7 @@ namespace WhereAmI.views
             {
                 btnAddPlace.IsEnabled = true;
                 btnRefresh.IsEnabled = true;
+                refreshCntrl.IsEnabled = true;
             });
         }
 
@@ -52,6 +53,13 @@ namespace WhereAmI.views
         //Refresh the system from UI manually
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
+            BackgroundWork.eventX.Set();
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            int i = (int) ((Slider)sender).Value;
+            BackgroundWork.iRT = i % BackgroundWork.refreshTimes.Length;
             BackgroundWork.eventX.Set();
         }
     }
