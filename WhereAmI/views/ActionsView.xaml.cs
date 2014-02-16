@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WhereAmI.models;
 using System.Data.Entity;
+using System.Threading;
 
 namespace WhereAmI.views
 {
@@ -44,10 +45,12 @@ namespace WhereAmI.views
         private void OnControlLoaded(object sender, RoutedEventArgs e)
         {
             buttonDelete.IsEnabled = false;
+            buttonRun.IsEnabled = false;
         }
         private void actionsViewData_Selected(object sender, RoutedEventArgs e)
         {
             buttonDelete.IsEnabled = true;
+            buttonRun.IsEnabled = true;
         }
 
         private void editEnd(object sender, DataGridCellEditEndingEventArgs e)
@@ -150,6 +153,11 @@ namespace WhereAmI.views
                 ctx.Actions.Add(a);
                 DataManager.Instance.safeSave();
             }
+        }
+
+        private void buttonRun_Click(object sender, RoutedEventArgs e)
+        {
+            ActionManager.execute(actionsViewData.SelectedItem as models.Action);
         }
     }
 }
