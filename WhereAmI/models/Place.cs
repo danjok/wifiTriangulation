@@ -31,9 +31,9 @@ namespace WhereAmI.models
             }
         }
 
-        private ulong _cnt;
+        private long _cnt;
         //Property Definition
-        public ulong Cnt
+        public long Cnt
         {
             get { return this._cnt; }
             //The setter has to call NotifyPropertyChanged to reflect changes

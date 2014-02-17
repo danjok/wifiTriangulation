@@ -13,7 +13,7 @@ namespace WhereAmI
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            ulong dt = (ulong) value;
+            long dt = (long) value;
 
 
             int days = (int)(dt / (1000 * 60 * 60 * 24));

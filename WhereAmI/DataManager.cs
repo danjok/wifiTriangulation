@@ -183,7 +183,7 @@ namespace WhereAmI
                 DateTime now = DateTime.Now;
                 TimeSpan diff = now.Subtract(oldDate);
                 oldDate = now;
-                newPlace.Cnt += (ulong)diff.TotalMilliseconds;
+                newPlace.Cnt += (long)diff.TotalMilliseconds;
                 //or simply
                 //newPlace.Cnt = newPlace.Cnt + BackgroundWork.refreshTime / 1000;
                 safeSave();
