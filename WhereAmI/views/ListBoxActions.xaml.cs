@@ -44,10 +44,10 @@ namespace WhereAmI.views
             }
         }
 
-        ListBox dragSource = null;
+        DataGrid dragSource = null;
         private void ListBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            ListBox parent = (ListBox)sender;
+            DataGrid parent = (DataGrid)sender;
             dragSource = parent;
             object data = GetDataFromListBox(dragSource, e.GetPosition(parent));
 
@@ -59,7 +59,7 @@ namespace WhereAmI.views
         }
 
         #region GetDataFromListBox(ListBox,Point)
-        private static object GetDataFromListBox(ListBox source, Point point)
+        private static object GetDataFromListBox(DataGrid source, Point point)
         {
             UIElement element = source.InputHitTest(point) as UIElement;
             if (element != null)

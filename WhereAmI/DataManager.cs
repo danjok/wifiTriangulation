@@ -151,6 +151,7 @@ namespace WhereAmI
 
         public void doRefresh()
         {
+            try { 
             //Call all registered handlers
             BackgroundWork.messageRefreshHandlers("Starting refresh...");
 
@@ -201,7 +202,11 @@ namespace WhereAmI
                 }
             }
             BackgroundWork.messageRefreshHandlers("Done");
-
+            }
+            catch (Exception)
+            {
+                BackgroundWork.messageRefreshHandlers("Failure.");
+            }
         }
 
         public void safeSave()

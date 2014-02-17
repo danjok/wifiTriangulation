@@ -27,7 +27,7 @@
                   AutoGenerateColumns="False" 
                   CanUserAddRows="False" 
                   CellEditEnding="editEnd" 
-                  SelectionMode="Single"
+                  SelectionMode="Single" Block.TextAlignment="Center"
                  >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name">

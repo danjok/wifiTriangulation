@@ -4,7 +4,10 @@
     <!--<Style TargetType="{x:Type Grid}">
         <Setter Property="Margin" Value="20" />
     </Style>-->
-
+    <Style TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment"
+                     Value="Center" />
+    </Style>
     <Style TargetType="{x:Type Label}">
         <Setter Property="Padding" Value="0,0,0,5" />
         <Setter Property="FontSize" Value="15" />
@@ -39,8 +42,19 @@
     <Style TargetType="{x:Type DataGrid}">
         <Setter Property="RowHeight" Value="35" />
         <Setter Property="FontSize" Value="15" />
-    </Style> 
-    
+    </Style>
+
+    <Style TargetType="{x:Type DataGridRow}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="LightGray"></Setter>
+            </Trigger>
+        </Style.Triggers>
+        <Style.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Gray"/>
+        </Style.Resources>
+    </Style>
+
     <Style TargetType="{x:Type Button}">
         <Setter Property="Width" Value="105" />
         <Setter Property="Height" Value="25" />

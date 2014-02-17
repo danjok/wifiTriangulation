@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Data.Entity;
 using WhereAmI.models;
+using System.Windows.Input;
 
 namespace WhereAmI
 {
@@ -32,7 +33,9 @@ namespace WhereAmI
             */
             mw = new MainWindow();
             mw.Show();
-            
+            DataManager.Instance.loadWifis();
+            mw.Cursor = Cursors.AppStarting;
+
             ThreadStart ts = new ThreadStart(BackgroundWork.Execute);
             refreshThread = new Thread(ts);
             refreshThread.IsBackground = true;
@@ -56,6 +59,7 @@ namespace WhereAmI
                 mw.Status.Text = "Loading completed successfully!";
                 refreshThread.Start();
                 loadedDataHandlers();
+                mw.Cursor = Cursors.Arrow;
             };
             loadingWorker.RunWorkerAsync();
 
