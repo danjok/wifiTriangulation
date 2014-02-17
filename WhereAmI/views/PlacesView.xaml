@@ -58,9 +58,9 @@
                 <TextBlock Text="{Binding Cnt, Converter={StaticResource converter}}" FontSize="15" HorizontalAlignment="Center"/>
                 <StackPanel Margin="10" HorizontalAlignment="Center" Orientation="Horizontal" >
                     <!-- binding of eventhandlers to controls-->
-                    <Button x:Name="btnChangePlace" Click="btnChangePlace_Click" Content="Edit"/>
-                    <Button x:Name="btnResetStatPlace" Click="btnResetStatPlace_Click" Content="Reset"/>
-                    <Button x:Name="btnDeletePlace" Click="btnDeletePlace_Click" Content="Delete"/>
+                    <Button x:Name="btnChangePlace" ToolTip="{x:Static p:Resources.ToolTip_EditPlace}" Click="btnChangePlace_Click" Content="Edit"/>
+                    <Button x:Name="btnResetStatPlace" ToolTip="{x:Static p:Resources.ToolTip_Reset}" Click="btnResetStatPlace_Click" Content="Reset"/>
+                    <Button x:Name="btnDeletePlace" ToolTip="{x:Static p:Resources.ToolTip_DeletePlace}" Click="btnDeletePlace_Click" Content="Delete"/>
                 </StackPanel>
             </StackPanel>       
             <TabControl Grid.Row="2" FontSize="15" Margin="0">

@@ -193,7 +193,7 @@ namespace WhereAmI
             {
                 currentState.Place = newPlace;
                 var currentActions = currentState.Place.InActions.ToList();
-
+                BackgroundWork.placeChangedHandlers(newPlace);
                 //System.Threading.Thread.Sleep(5000);
                 foreach (models.Action a in currentActions)
                 {
