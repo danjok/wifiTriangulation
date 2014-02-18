@@ -44,7 +44,7 @@ namespace WhereAmI
         {
             Process proc = new System.Diagnostics.Process();
             proc.StartInfo.FileName = "cmd.exe";
-            proc.StartInfo.Arguments = cmd;
+            proc.StartInfo.Arguments = "/C "+cmd;
             proc.StartInfo.CreateNoWindow = true;
             proc.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             proc.StartInfo.UseShellExecute = false;

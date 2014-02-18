@@ -17,8 +17,8 @@
             <Button  ToolTip="{x:Static p:Resources.ToolTip_AddImage}" x:Name="buttonImage" Content="Add Image" Click="AddSetWallpaper_Click" IsEnabled="False"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,10,10,0">
-                <Button  ToolTip="{x:Static p:Resources.ToolTip_DeleteAction}" x:Name="buttonRun"  Content="Run" Click="buttonRun_Click"/>
-                <Button  ToolTip="{x:Static p:Resources.ToolTip_RunAction}" x:Name="buttonDelete"  Content="Delete" Click="btnDeleteAction_Click"/>
+                <Button  ToolTip="{x:Static p:Resources.ToolTip_RunAction}" x:Name="buttonRun"  Content="Run" Click="buttonRun_Click"/>
+                <Button  ToolTip="{x:Static p:Resources.ToolTip_DeleteAction}" x:Name="buttonDelete"  Content="Delete" Click="btnDeleteAction_Click"/>
             </StackPanel>
         </StackPanel>
         <Grid  Grid.Row="1" Margin="10">
