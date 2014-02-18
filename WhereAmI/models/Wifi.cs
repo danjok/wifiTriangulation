@@ -8,6 +8,7 @@ namespace WhereAmI.models
 {
     public class Wifi
     {
+        public string MAC { get; set; }
         public string SSID { get; set; }
 
         public float Power { get; set; }
@@ -15,7 +16,7 @@ namespace WhereAmI.models
 
         public override string ToString()
         {
-            return this.SSID + ": " + this.PowerPerc+";";
+            return this.MAC+ ": "+ this.SSID + ": " + this.PowerPerc+";";
         }
     }
 }

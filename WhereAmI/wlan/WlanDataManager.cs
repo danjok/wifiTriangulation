@@ -17,21 +17,29 @@ namespace WhereAmI.wlan
             return Encoding.ASCII.GetString(ssid.SSID, 0, (int)ssid.SSIDLength);
         }
 
+        private static string GetBssIdString(byte[] dot11Bssid)
+        {
+            StringBuilder sb = new StringBuilder(dot11Bssid.Length * 2);
+            foreach (byte b in dot11Bssid)
+            {
+                sb.AppendFormat("{0:x2}", b);
+            }
+            return sb.ToString();
+        }
+        
         public static List<Wifi> loadWifis()
         {
             WlanClient client = new WlanClient();
             List<Wifi> wifis = new List<Wifi>();
             foreach (WlanClient.WlanInterface wlanIface in client.Interfaces)
             {
-                // Lists all networks with WEP security
-                Wlan.WlanAvailableNetwork[] networks = wlanIface.GetAvailableNetworkList(0);
-                foreach (Wlan.WlanAvailableNetwork network in networks)
-                {
-                    var ssid = GetStringForSSID(network.dot11Ssid);
-                    var name = network.profileName;
-                    var s = network.ToString();
-                    uint powerc = network.wlanSignalQuality;
-                    wifis.Add(new Wifi() { SSID = ssid, PowerPerc = Convert.ToInt32(powerc) });   
+                Wlan.WlanBssEntry[] bssEntries = wlanIface.GetNetworkBssList();
+                foreach (Wlan.WlanBssEntry bssEntry in bssEntries)
+                {   
+                    var mac = GetBssIdString(bssEntry.dot11Bssid);
+                    var ssid = GetStringForSSID(bssEntry.dot11Ssid);
+                    int powerc = (int)bssEntry.linkQuality;
+                    wifis.Add(new Wifi() { SSID = ssid, PowerPerc = powerc, MAC = mac });   
                 }
             }
             return wifis;

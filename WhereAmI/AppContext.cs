@@ -17,19 +17,19 @@ namespace WhereAmI
             IList<Place> defaultPlaces = new List<Place>();
 
             List<Wifi> snapshot1 = new List<Wifi>();
-            snapshot1.Add(new Wifi() { SSID = "Home", PowerPerc = 100 });
-            snapshot1.Add(new Wifi() { SSID = "HomeDani", PowerPerc = 1 });
-            snapshot1.Add(new Wifi() { SSID = "dlink", PowerPerc = 10 });
+            snapshot1.Add(new Wifi() { MAC="A",SSID = "Home", PowerPerc = 100 });
+            snapshot1.Add(new Wifi() { MAC="B",SSID = "HomeDani", PowerPerc = 1 });
+            snapshot1.Add(new Wifi() { MAC="C",SSID = "dlink", PowerPerc = 10 });
 
             List<Wifi> snapshot2 = new List<Wifi>();
-            snapshot2.Add(new Wifi() { SSID = "Polito", PowerPerc = 10 });
-            snapshot2.Add(new Wifi() { SSID = "Lab1", PowerPerc = 30 });
-            snapshot2.Add(new Wifi() { SSID = "Lab2", PowerPerc = 50 });
+            snapshot2.Add(new Wifi() { MAC="D",SSID = "Polito", PowerPerc = 10 });
+            snapshot2.Add(new Wifi() { MAC="E",SSID = "Lab1", PowerPerc = 30 });
+            snapshot2.Add(new Wifi() { MAC="F",SSID = "Lab2", PowerPerc = 50 });
 
             List<Wifi> snapshot3 = new List<Wifi>();
-            snapshot3.Add(new Wifi() { SSID = "CompanyHall", PowerPerc = 50 });
-            snapshot3.Add(new Wifi() { SSID = "CompanyRoom1", PowerPerc = 20 });
-            snapshot3.Add(new Wifi() { SSID = "CompanyLab", PowerPerc = 80 });
+            snapshot3.Add(new Wifi() { MAC="1",SSID = "CompanyHall", PowerPerc = 50 });
+            snapshot3.Add(new Wifi() { MAC="2",SSID = "CompanyRoom1", PowerPerc = 20 });
+            snapshot3.Add(new Wifi() { MAC="3",SSID = "CompanyLab", PowerPerc = 80 });
 
             //Actions
             models.Action a1 = new models.Action() { ActionId = 1, Type="cmd", Name = "Use DHCP", Command = "netsh interface ip set address name='Connessione rete wireless' source=dhcp" };

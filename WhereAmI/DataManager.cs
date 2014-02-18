@@ -77,9 +77,9 @@ namespace WhereAmI
                     context.Places.Load();
                     context.Actions.Load();
                     //Only for tests
-                    foreach (Place p in context.Places.Local)
-                        foreach (Wifi w in p.Wifis)
-                            mockWifis.Add(w);
+                    //foreach (Place p in context.Places.Local)
+                    //    foreach (Wifi w in p.Wifis.Values)
+                    //        mockWifis.Add(w);
                     loaded = true;
                 }
                 catch (Exception e)

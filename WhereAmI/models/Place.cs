@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -53,9 +54,9 @@ namespace WhereAmI.models
         {
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
-        } 
+        }
 
-        public Place(string name, List<Wifi> wifis)
+        public Place(string name, Hashtable wifis)
         {
             this.Name = name;
             this.Wifis = wifis;
@@ -82,7 +83,7 @@ namespace WhereAmI.models
         }
 
         [System.ComponentModel.DataAnnotations.Schema.NotMapped]
-        public List<Wifi> Wifis { get; set; }
+        public Hashtable Wifis { get; set; }
 
         //Relationships
         //public virtual ICollection<Action> BeforeActions { get; set; }
@@ -105,19 +106,20 @@ namespace WhereAmI.models
             return serialized;
         }
 
-        static public List<Wifi> deserializationSnapshot(string ser)
+        static public Hashtable deserializationSnapshot(string ser)
         {
-            List<Wifi> snapshot = new List<Wifi>();
+            Hashtable snapshot = new Hashtable();
             string[] wifiStrings = ser.Split(';');
             string[] sProperties;
 
             foreach (string ws in wifiStrings)
             {
                 sProperties = ws.Split(':');
-                if (sProperties.Length == 2)
-                    snapshot.Add(new Wifi { 
-                        SSID = sProperties[0], 
-                        PowerPerc = int.Parse(sProperties[1])
+                if (sProperties.Length == 3)
+                    snapshot.Add(sProperties[0], new Wifi() {
+                        MAC = sProperties[0],
+                        SSID = sProperties[1], 
+                        PowerPerc = int.Parse(sProperties[2])
                     });
             }
 

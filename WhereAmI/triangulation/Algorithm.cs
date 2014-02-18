@@ -34,7 +34,7 @@ namespace WhereAmI.triangulation
             //iterate on all current networks
             foreach(Wifi currentWifi in currentWifis){
                  //look for a current network in networks of the place to check
-                 Wifi storedWifi = placeToCheck.Wifis.Where(w => w.SSID == currentWifi.SSID).FirstOrDefault<Wifi>();
+                 Wifi storedWifi = placeToCheck.Wifis[currentWifi.MAC] as Wifi;
                  if(storedWifi != null) {
                      //found
                     double t = 100 - Math.Abs((currentWifi.PowerPerc-storedWifi.PowerPerc));

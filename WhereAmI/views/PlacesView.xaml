@@ -75,27 +75,8 @@
                             <Button Margin="1" HorizontalAlignment="Center" x:Name="btnUpdateWifis" Click="btnUpdateWifis_Click" Content="Update"/>
                         </StackPanel>
                         <!--Items list as in the first tab-->
-                        <ScrollViewer  Grid.Row="1" HorizontalAlignment="Center" x:Name="wifiList"  VerticalScrollBarVisibility="Auto" CanContentScroll="True" HorizontalScrollBarVisibility="Auto">
-                            <ItemsControl
-                            ItemsSource="{Binding Wifis}" 
-					        x:Name="snapshot" 
-					        HorizontalAlignment="Left"
-                            >
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid Margin="0,10,0,0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="200" />
-                                                <ColumnDefinition Width="200" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock FontSize="15" Grid.Column="0"  Text="{Binding SSID}" />
-                                            <ProgressBar  Grid.Column="1"  Margin="10,0,0,0"  Minimum="0" Maximum="100" Value="{Binding PowerPerc}" />
-                                            <TextBlock Grid.Column="1"   FontSize="15" Text="{Binding PowerPerc}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                        </Grid>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </ScrollViewer>
+                        <local:WifiListUserControl Grid.Row="1" x:Name="wifis">
+                        </local:WifiListUserControl>
                         </Grid>
                 </TabItem>
                 <TabItem Header="Actions">

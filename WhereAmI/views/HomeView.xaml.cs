@@ -25,7 +25,7 @@ namespace WhereAmI.views
         public HomeView()
         {
             InitializeComponent();
-            wifiData.ItemsSource = DataManager.Instance.wifis;
+            ((WifiListUserControl)wifiData).setItemsSource(DataManager.Instance.wifis);
             vState.DataContext = DataManager.Instance.currentState;
             App.loadedDataHandlers += (delegate()
             {

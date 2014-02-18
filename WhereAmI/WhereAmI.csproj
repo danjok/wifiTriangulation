@@ -133,6 +133,9 @@
       <DependentUpon>PlacesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="views\validators\StringRangeValidationRule.cs" />
+    <Compile Include="views\WifiList.xaml.cs">
+      <DependentUpon>WifiList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="views\WizardDialog.xaml.cs">
       <DependentUpon>WizardDialog.xaml</DependentUpon>
     </Compile>
@@ -180,6 +183,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="views\StatsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\WifiList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
