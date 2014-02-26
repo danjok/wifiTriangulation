@@ -1,4 +1,28 @@
-The algorithm is based on the following scenario:
+**WhereAmI**
+========================
+A WiFi Localizer for Windows OS
+
+*Authors:   Abbà Maurizio - Annuzzi Daniele*
+
+## Description ##
+WhereAmI is a context-aware system based on WiFi localization. It lets Windows Users to save places, configure actions to be automatically executed and check time statistics for places where they have been.
+
+The localization is only based on Wireless Access Points retrieved by the Wifi (802.11) network adapters installed in the Windows machine.
+
+Actions can be:
+* commands to be executed in the Command Prompt (such as the automatic firewall configuration, network settings, ...)
+* application executions
+* message notification in the task bar
+* wallpaper setting
+
+### Technical features ###
+* WPF Application (Microsoft .NET Framework 4.5)
+* Dependencies managed with NuGet
+* Use of Entity Framework (EF 6 - Code First approach)
+* Use of [Managed Wifi API] (http://managedwifi.codeplex.com/) 
+
+### Core ###
+The localization algorithm is based on the following scenario:
 
 we memorized a set of locations, each location has a certain number of networks associated, with its relative power.
 It's like a snapshot of the wifi interface list captured in that location.
